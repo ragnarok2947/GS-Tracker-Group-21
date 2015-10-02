@@ -25,17 +25,17 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    public void get_name(View view){
-        EditText mEdit   = (EditText)findViewById(R.id.level);
+    public void get_name(View view){  //runs wutton is clicked
+        EditText mEdit   = (EditText)findViewById(R.id.level);  //get the specific text box
         String person_name;
-        person_name = mEdit.getText().toString();
+        person_name = mEdit.getText().toString();  //person name
         String Server;
         mEdit = (EditText)findViewById(R.id.health);
-        Server = mEdit.getText().toString();
-        JSONObject User = HttpURLConnectionExample.sentGet(person_name, Server);
+        Server = mEdit.getText().toString();      //get the user-inputted realm
+        JSONObject User = HttpURLConnectionExample.sentGet(person_name, Server);//get the JSON object that is returned from the API call
         ((EditText)findViewById(R.id.level)).setText("Level: " + HttpURLConnectionExample.getLevel(User));
         ((TextView)findViewById(R.id.textView)).setText("Hello, " + person_name);//HttpURLConnectionExample.sentGet(person_name));
-        ((EditText)findViewById(R.id.health)).setText("Health: " + HttpURLConnectionExample.getHealth(User));
+        ((EditText)findViewById(R.id.health)).setText("Health: " + HttpURLConnectionExample.getHealth(User));  //set the text box values accordingly
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
