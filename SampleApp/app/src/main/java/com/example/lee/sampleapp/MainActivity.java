@@ -19,16 +19,23 @@ import java.net.URL;
 import java.lang.Object;
 import android.os.StrictMode;
 import android.os.Bundle;
+import org.json.JSONObject;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
     public void get_name(View view){
-        EditText mEdit   = (EditText)findViewById(R.id.charname);
+        EditText mEdit   = (EditText)findViewById(R.id.level);
         String person_name;
         person_name = mEdit.getText().toString();
-        ((EditText)findViewById(R.id.charname)).setText("Server: " + HttpURLConnectionExample.sentGet(person_name));
-        ((TextView)findViewById(R.id.textView)).setText("Hello, " + person_name + "!");//HttpURLConnectionExample.sentGet(person_name));
+        String Server;
+        mEdit = (EditText)findViewById(R.id.health);
+        Server = mEdit.getText().toString();
+        JSONObject User = HttpURLConnectionExample.sentGet(person_name, Server);
+        ((EditText)findViewById(R.id.level)).setText("Level: " + HttpURLConnectionExample.getLevel(User));
+        ((TextView)findViewById(R.id.textView)).setText("Hello, " + person_name);//HttpURLConnectionExample.sentGet(person_name));
+        ((EditText)findViewById(R.id.health)).setText("Health: " + HttpURLConnectionExample.getHealth(User));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

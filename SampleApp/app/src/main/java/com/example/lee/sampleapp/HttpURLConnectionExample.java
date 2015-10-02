@@ -31,9 +31,9 @@ public class HttpURLConnectionExample {
     }
 
 
-    public static String sentGet(String UserInput) {
+    public static JSONObject sentGet(String UserInput, String ServerInput) {
         try{
-            URL url = new URL("https://us.api.battle.net/wow/character/kiljaeden/"+UserInput+"?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
+            URL url = new URL("https://us.api.battle.net/wow/character/"+ServerInput+"/"+UserInput+"?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             StrictMode.ThreadPolicy policy = new
                     StrictMode.ThreadPolicy.Builder()
@@ -55,10 +55,27 @@ public class HttpURLConnectionExample {
 
 
 
-            return User.get("realm").toString();
+            return User;//User.get("realm").toString();
+        }
+        catch(Exception e){return null;}
+
+    }
+
+
+    public static String getLevel(JSONObject User){
+        try {
+            return User.get("level").toString();
         }
         catch(Exception e){return e.toString();}
 
+    }
+
+    public static String getHealth(JSONObject User){
+        try {
+            JSONObject Stats = new JSONObject(User.get("stats").toString());
+            return Stats.get("health").toString();
+        }
+        catch(Exception e){return e.toString();}
     }
 }
 

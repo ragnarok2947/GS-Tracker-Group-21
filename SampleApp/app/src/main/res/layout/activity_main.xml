@@ -16,7 +16,7 @@
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
-        android:id="@+id/charname"
+        android:id="@+id/level"
         android:layout_below="@+id/textView"
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView"
@@ -27,8 +27,19 @@
         android:layout_height="wrap_content"
         android:text="Enter"
         android:id="@+id/button"
-        android:layout_below="@+id/charname"
         android:onClick="get_name"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/health"
+        android:layout_above="@+id/button"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
 
 </RelativeLayout>
