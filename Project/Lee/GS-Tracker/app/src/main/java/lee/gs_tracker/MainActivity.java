@@ -23,8 +23,24 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Parent> arrayParents = new ArrayList<Parent>();
         ArrayList<String> arrayChildren = new ArrayList<String>();
 
+
+       int i;
+        arrayParents.add(Initializer.initialize_Blizz());
+
+
+        Parent RPG = new Parent();
+        RPG.setTitle("FPS");
+        ArrayList<String> RPGChildren = new ArrayList<>();
+
+        for(i=0;i<3;i++){
+            RPGChildren.add("Template" + (i+1));
+        }
+
+        RPG.setArrayChildren(RPGChildren);
+        arrayParents.add(RPG);
+
         //here we set the parents and the children
-        for (int i = 0; i < 10; i++){
+        /*for (int i = 0; i < 10; i++){
             //for each "i" create a new Parent object to set the title and the children
             Parent parent = new Parent();
             parent.setTitle("Parent " + i);
@@ -37,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             //in this array we add the Parent object. We will use the arrayParents at the setAdapter
             arrayParents.add(parent);
-        }
+        }*/
 
         //sets the adapter that provides data to the list.
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
