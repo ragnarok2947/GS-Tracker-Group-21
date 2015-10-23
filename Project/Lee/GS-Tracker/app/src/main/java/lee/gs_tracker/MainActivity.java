@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
         arrayParents.add(Initializer.initialize_Blizz());
 
 
-        Parent RPG = new Parent();
-        RPG.setTitle("FPS");
-        ArrayList<String> RPGChildren = new ArrayList<>();
+        Parent FPS = new Parent();
+        FPS.setTitle("FPS");
+        ArrayList<String> FPSChildren = new ArrayList<>();
 
         for(i=0;i<3;i++){
-            RPGChildren.add("Template" + (i+1));
+            FPSChildren.add("Template" + (i+1));
         }
 
-        RPG.setArrayChildren(RPGChildren);
-        arrayParents.add(RPG);
+        FPS.setArrayChildren(FPSChildren);
+        arrayParents.add(FPS);
 
         //here we set the parents and the children
         /*for (int i = 0; i < 10; i++){
