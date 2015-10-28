@@ -4,9 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.view.ViewGroup;
 import android.app.Activity;
 import android.app.ExpandableListActivity;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,22 +23,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
 
-        mExpandableList = (ExpandableListView)findViewById(R.id.gameStatContent);
+        mExpandableList = (ExpandableListView) findViewById(R.id.gameStatContent);
 
         ArrayList<Parent> arrayParents = new ArrayList<Parent>();
         ArrayList<String> arrayChildren = new ArrayList<String>();
 
 
-       int i;
+        int i;
         arrayParents.add(Initializer.initialize_Blizz());
 
 
         Parent FPS = new Parent();
         FPS.setTitle("FPS");
-        ArrayList<String> FPSChildren = new ArrayList<>();
+        ArrayList<Child> FPSChildren = new ArrayList<>();
 
-        for(i=0;i<3;i++){
-            FPSChildren.add("Template" + (i+1));
+        for (i = 0; i < 3; i++) {
+            Child FPSChild = new Child();
+            FPSChild.ChildName = "Template" + (i + 1);
+            FPSChild.Title = "Template" + (i+1);
+            FPSChildren.add(FPSChild);
+            //FPSChildren.add("Template" + (i + 1));
         }
 
         FPS.setArrayChildren(FPSChildren);
@@ -57,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
         //sets the adapter that provides data to the list.
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
+
+    }
+    public void goToStat(View view){
+        String TagName = view.getTag().toString();
+        if(TagName == "WoW") {
+            Intent intent = new Intent(this, WoWCredentials.class);
+            startActivity(intent);
+        }
+
 
     }
 

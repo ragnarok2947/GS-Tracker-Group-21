@@ -12,15 +12,31 @@ public class Initializer {
 
 
     public static Parent initialize_Blizz(){
-        ArrayList<String> Games = new ArrayList<String>();
+        ArrayList<Child> Games = new ArrayList<Child>();
 
         Parent BlizzardGames = new Parent();
         BlizzardGames.setTitle("Blizzard Games");
         int i;
+        Child WoW = new Child();
+        WoW.Title = "World of Warcraft";
+        WoW.ChildName = "WoW";
+        Games.add(WoW);
 
-        Games.add("World of Warcraft");
-        Games.add("Diablo III");
-        Games.add("Starcraft II");
+        Child Diablo = new Child();
+        Diablo.Title = "Diablo III";
+        Diablo.ChildName = "DiabloIII";
+        Games.add(Diablo);
+
+        Child Starcraft = new Child();
+        Starcraft.Title = "Starcraft II";
+        Starcraft.ChildName = "StarcraftII";
+        Games.add(Starcraft);
+
+
+
+        //Games.add("World of Warcraft");
+        //Games.add("Diablo III");
+        //Games.add("Starcraft II");
 
         BlizzardGames.setArrayChildren(Games);
 

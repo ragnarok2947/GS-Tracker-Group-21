@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Parent {
     private String mTitle;
-    private ArrayList<String>  mArrayChildren;
+    private ArrayList<Child>  mArrayChildren;
 
 
     public String getTitle(){
@@ -14,11 +14,11 @@ public class Parent {
         mTitle = title;
     }
 
-    public ArrayList<String> getArrayChildren(){
+    public ArrayList<Child> getArrayChildren(){
         return mArrayChildren;
     }
 
-    public void setArrayChildren(ArrayList<String> arrayChildren){
+    public void setArrayChildren(ArrayList<Child> arrayChildren){
         mArrayChildren = arrayChildren;
 
     }

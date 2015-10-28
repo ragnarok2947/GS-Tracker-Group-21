@@ -6,7 +6,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/list_item_child"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:onClick="goToStat">
 
 
     <TextView android:layout_width="wrap_content"
@@ -14,7 +15,7 @@
         android:id="@+id/list_item_text_child"
         android:textSize="20sp"
         android:padding="10dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp" />
 
 
 </LinearLayout>

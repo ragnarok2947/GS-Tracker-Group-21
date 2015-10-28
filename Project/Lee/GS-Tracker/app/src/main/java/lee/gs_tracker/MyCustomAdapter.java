@@ -94,9 +94,9 @@ public class MyCustomAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textView = (TextView) view.findViewById(R.id.list_item_text_child);
-        textView.setText(mParent.get(groupPosition).getArrayChildren().get(childPosition));
+        textView.setText(mParent.get(groupPosition).getArrayChildren().get(childPosition).Title);
 
-        view.setTag(holder);
+        view.setTag(mParent.get(groupPosition).getArrayChildren().get(childPosition).ChildName);
 
         //return the entire view
         return view;
