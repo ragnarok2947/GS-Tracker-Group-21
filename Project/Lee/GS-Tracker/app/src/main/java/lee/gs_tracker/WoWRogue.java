@@ -17,6 +17,7 @@ import org.json.simple.JSONValue;
 import com.koushikdutta.ion.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import java.io.File;
 
 
 
@@ -39,7 +40,8 @@ public class WoWRogue extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        ImageView image = (ImageView)findViewById(R.id.imageView);
+        //ImageView image = (ImageView)findViewById(R.id.imageView);FIX
+        //image.setImageBitmap(WoWAPIUser.getCharPic(User));
         //image.setImageDrawable(WoWAPIUser.getCharPic(User));
         //((ImageView)view).setImageBitmap(BitmapFactory.decodeFile("/data/data/com.myapp/files/someimage.jpg"));
         //image.setImageBitmap(BitmapFactory.decodeFile("/Users/Lee/Documents/Skool/COP 4331/Project/GS-Tracker-Group-21/Project/Lee/GS-Tracker/app/libs/icon.jpg"));

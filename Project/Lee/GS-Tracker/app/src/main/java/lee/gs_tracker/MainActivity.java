@@ -7,11 +7,20 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ExpandableListView;
+import java.io.File;
 import android.view.ViewGroup;
 import android.app.Activity;
 import android.app.ExpandableListActivity;
 import android.widget.TextView;
+import java.io.FileOutputStream;
+import android.content.Context;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import java.util.Scanner;
+
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,13 +77,74 @@ public class MainActivity extends AppCompatActivity {
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
 
     }
+    public File createFile(String FileName, String Data){
+
+        File file = new File(getFilesDir(),FileName);
+        FileOutputStream outputStream;
+        String string = "";
+        try {
+            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+            outputStream.write(Data.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
     public void goToStat(View view){
         String TagName = view.getTag().toString();
+
         if(TagName == "WoW") {
-            Intent intent = new Intent(this, WoWCredentials.class);
-            startActivity(intent);
+            File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+            if(file.exists()){       //if a WoW is is already in, grab it
+                //getBaseContext().getFileStreamPath(fname);
+
+                //Object data = new InternalData().getFileContents("WoWUser.txt");
+                try {
+                    String data = new Scanner(file).next();
+                    JSONObject User = (JSONObject)JSONValue.parse(data);
+                    startActivity(new WoWCredentials().goToTemplate(this, User.get("Server").toString(), User.get("CharName").toString()));
+
+                }
+                catch(Exception E){
+                    E.printStackTrace();
+                }
+
+            }
+            else{
+                Intent intent = new Intent(this, WoWCredentials.class);
+                startActivity(intent);
+                //createFile("WoWUser.txt");
+            }
+
         }
 
+
+    }
+
+
+    public void writeToFile(String FileName, String Data){
+        FileOutputStream Writer;
+
+        try
+        {
+            //File root = Environment.getExternalStorageDirectory();
+            //File file = new File(root, "WoWUser");
+            //Writer = new FileOutputStream(FileName);
+            if(new File(FileName).exists()){
+                System.out.println("HI");
+            }
+            Writer = openFileOutput(FileName, Context.MODE_PRIVATE);
+            //Writer = context.openFileOutput("WoWUser", Context.MODE_PRIVATE);
+            Writer.write(Data.getBytes());
+            Writer.close();
+
+        }
+        catch(Exception E)
+        {
+            E.printStackTrace();
+
+        }
 
     }
 

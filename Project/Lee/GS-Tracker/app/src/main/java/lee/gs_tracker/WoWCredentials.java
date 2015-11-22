@@ -1,5 +1,6 @@
 package lee.gs_tracker;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,8 +8,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.view.View;
 import android.content.Intent;
+
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class WoWCredentials extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "WoWRogue";
@@ -58,10 +64,33 @@ public class WoWCredentials extends AppCompatActivity {
 
         return null;
     }
+    public File createFile(String FileName, String Data){
+
+        File file = new File(getFilesDir(),FileName);
+        FileOutputStream outputStream;
+        String string = "";
+        try {
+            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+            outputStream.write(Data.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public void sendCharData(){
+        JSONObject User = new JSONObject();
+        User.put("Server", getServerName());
+        User.put("CharName", getCharName());
+        createFile("WoWUser.txt", User.toJSONString());
+        //new MainActivity().writeToFile("WoWUser.txt", User.toJSONString());
+    }
 
 
 
     public void goToTemplate(View view){
+        sendCharData();
         String InputURL = "https://us.api.battle.net/wow/character/" + getServerName() + "/" + getCharName() + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
        org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
         String Class = WoWAPIUser.getCharClass(Obj);
@@ -72,6 +101,19 @@ public class WoWCredentials extends AppCompatActivity {
 
         }
 
+    }
+    public Intent goToTemplate(Context context, String ServerName, String CharName){
+        String InputURL = "https://us.api.battle.net/wow/character/" + ServerName + "/" + CharName + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
+        org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
+        String Class = WoWAPIUser.getCharClass(Obj);
+        if(Class.equals("Rogue")){
+            Intent intent = new Intent(context, WoWRogue.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
+            //startActivity(intent);
+
+        }
+        return null;
     }
 
 

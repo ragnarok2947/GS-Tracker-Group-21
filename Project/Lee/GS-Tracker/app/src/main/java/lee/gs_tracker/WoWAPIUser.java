@@ -14,11 +14,14 @@ import android.renderscript.ScriptGroup;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.DataInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import android.net.Uri;
 import java.net.*;
 import java.lang.Object;
 import android.media.Image;
@@ -89,13 +92,18 @@ public class WoWAPIUser {
         url = url + thumbnail;
 
         try {
+
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setDoInput(true);
             connection.connect();
+            //DataInputStream in = connection.getInputStream();
             InputStream input = connection.getInputStream();
+            //Uri uri = Uri.parse(d.readUTF());
             //InputStream ImageStream = ((InputStream)new URL(url));
             Bitmap x = BitmapFactory.decodeStream(input);
+
             //Drawable Image = Drawable.createFromStream(ImageStream, url);
-            return x;
+            return null;
 
         }
         catch(Exception E){
