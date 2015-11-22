@@ -67,6 +67,29 @@ public class WoWAPIUser {
 
     }
 
+    public static String getCharName(org.json.simple.JSONObject User){
+        try {
+            return User.get("name").toString();
+
+        }
+
+        catch(Exception E){
+            E.printStackTrace();
+            return User.get("name").toString();
+        }
+    }
+    public static String getServer(org.json.simple.JSONObject User){
+        try{
+            return User.get("realm").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+    }
+
+    public static org.json.JSONObject getStats(org.json.simple.JSONObject User){
+        return sentGet("https://us.api.battle.net/wow/character/"+getServer(User)+"/"+ getCharName(User) +"?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
+    }
     public static String getCharClass(JSONObject User){
        JSONObject Classes = sentGet("https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
         try {

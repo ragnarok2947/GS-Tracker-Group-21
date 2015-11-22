@@ -6,19 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
-import android.widget.ImageView;
+import android.widget.EditText;
 
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
-import android.media.Image;
 //import org.json.JSONObject;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import com.koushikdutta.ion.*;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import java.io.File;
-
 
 
 public class WoWRogue extends AppCompatActivity {
@@ -30,13 +22,8 @@ public class WoWRogue extends AppCompatActivity {
         String From = intent.getStringExtra(WoWCredentials.EXTRA_MESSAGE);
         JSONParser Parser = new JSONParser();
         JSONObject User;
-        try {
-            Object obj = Parser.parse(From);
-            User = (JSONObject)(obj);   //get JSONObject for this user
-        }
-        catch(Exception E){
-            User = null;
-        }
+
+
 
 
         super.onCreate(savedInstanceState);
@@ -48,6 +35,21 @@ public class WoWRogue extends AppCompatActivity {
         //Ion.with(image).load("icon.jpg");
         //image.setImageBitmap(WoWAPIUser.getCharPic(User));
         setContentView(R.layout.activity_wo_wrogue);
+        try {
+            Object obj = Parser.parse(From);
+            User = (JSONObject)(obj);   //get JSONObject for this user
+            setFields(User);
+        }
+        catch(Exception E){
+            User = null;
+        }
+    }
+
+    public void setFields(JSONObject User){
+        ((EditText)findViewById(R.id.nameText)).setText(WoWAPIUser.getCharName(User));
+        //continue here
+
+
     }
 
     @Override
