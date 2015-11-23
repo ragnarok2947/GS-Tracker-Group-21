@@ -1,4 +1,4 @@
-package lee.gs_tracker;
+package lee.gs_tracker.WoW;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -419,40 +419,12 @@ public class WoWAPIUser {
 
     }
 
-    public static Bitmap getCharPic(org.json.simple.JSONObject User){
+    public static String getCharPic(org.json.simple.JSONObject User){
         String url = "http://render-api-us.worldofwarcraft.com/static-render/us/";
         String thumbnail = User.get("thumbnail").toString();
         url = url + thumbnail;
+        return url;
 
-        try {
-
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            //DataInputStream in = connection.getInputStream();
-            InputStream input = connection.getInputStream();
-            //Uri uri = Uri.parse(d.readUTF());
-            //InputStream ImageStream = ((InputStream)new URL(url));
-            Bitmap x = BitmapFactory.decodeStream(input);
-
-            //Drawable Image = Drawable.createFromStream(ImageStream, url);
-            return null;
-
-        }
-        catch(Exception E){
-            String Dupe = E.getMessage();
-            //System.out.println(E.toString());
-            return null;
-        }
-
-        /*
-        HttpURLConnection connection = (HttpURLConnection)new URL(url) .openConnection();
-    connection.setRequestProperty("User-agent","Mozilla/4.0");
-
-    connection.connect();
-    InputStream input = connection.getInputStream();
-
-         */
     }
 }
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="lee.gs_tracker" >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WoWRogue"
+            android:name=".WoW.WoWRogue"
             android:label="@string/title_activity_wo_wrogue"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -25,8 +27,16 @@
                 android:value="lee.gs_tracker.MainActivity" />
         </activity>
         <activity
-            android:name=".WoWCredentials"
+            android:name=".WoW.WoWCredentials"
             android:label="@string/title_activity_wo_wcredentials"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWHunter"
+            android:label="@string/title_activity_wo_whunter"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

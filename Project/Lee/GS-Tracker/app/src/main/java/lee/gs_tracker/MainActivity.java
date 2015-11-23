@@ -8,20 +8,17 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ExpandableListView;
 import java.io.File;
-import android.view.ViewGroup;
-import android.app.Activity;
-import android.app.ExpandableListActivity;
-import android.widget.TextView;
 import java.io.FileOutputStream;
 import android.content.Context;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
+
 import java.util.Scanner;
 
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import lee.gs_tracker.WoW.WoWCredentials;
 
 public class MainActivity extends AppCompatActivity {
     private ExpandableListView mExpandableList;

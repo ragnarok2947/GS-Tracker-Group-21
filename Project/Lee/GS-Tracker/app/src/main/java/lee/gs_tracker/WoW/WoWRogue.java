@@ -1,4 +1,4 @@
-package lee.gs_tracker;
+package lee.gs_tracker.WoW;
 
 
 import android.app.AlertDialog;
@@ -19,6 +19,10 @@ import org.json.simple.JSONObject;
 import android.widget.ImageView;
 import java.io.File;
 
+import lee.gs_tracker.DownloadImageTask;
+import lee.gs_tracker.MainActivity;
+import lee.gs_tracker.R;
+
 
 public class WoWRogue extends AppCompatActivity {
 
@@ -34,22 +38,18 @@ public class WoWRogue extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        //ImageView image = (ImageView)findViewById(R.id.imageView);FIX
-        //image.setImageBitmap(WoWAPIUser.getCharPic(User));
-        //image.setImageDrawable(WoWAPIUser.getCharPic(User));
-        //((ImageView)view).setImageBitmap(BitmapFactory.decodeFile("/data/data/com.myapp/files/someimage.jpg"));
-        //image.setImageBitmap(BitmapFactory.decodeFile("/Users/Lee/Documents/Skool/COP 4331/Project/GS-Tracker-Group-21/Project/Lee/GS-Tracker/app/libs/icon.jpg"));
-        //Ion.with(image).load("icon.jpg");
-        //image.setImageBitmap(WoWAPIUser.getCharPic(User));
         setContentView(R.layout.activity_wo_wrogue);
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
-                .execute("http://render-api-us.worldofwarcraft.com/static-render/us/kiljaeden/88/163043160-avatar.jpg");
+
         try {
             Object obj = Parser.parse(From);
             User = (JSONObject)(obj);   //get JSONObject for this user
             obj = Parser.parse(WoWAPIUser.getStats(User).toString());
             JSONObject userStats = (JSONObject) (obj);
+
+            new DownloadImageTask((ImageView) findViewById(R.id.imageView)) //set thumbnail and fields for Rogue
+                    .execute(WoWAPIUser.getCharPic(User));
             setFields(User, userStats);
+
         }
         catch(Exception E){
             User = null;

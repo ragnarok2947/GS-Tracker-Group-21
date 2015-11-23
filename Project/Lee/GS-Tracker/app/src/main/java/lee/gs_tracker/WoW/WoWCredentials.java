@@ -1,4 +1,4 @@
-package lee.gs_tracker;
+package lee.gs_tracker.WoW;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +9,12 @@ import android.widget.EditText;
 import android.view.View;
 import android.content.Intent;
 
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import java.io.File;
 import java.io.FileOutputStream;
+
+import lee.gs_tracker.R;
 
 public class WoWCredentials extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "WoWRogue";
