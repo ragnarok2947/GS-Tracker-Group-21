@@ -391,6 +391,16 @@ public class WoWAPIUser {
         }
     }
 
+    public static org.json.JSONArray getHunterPets(org.json.simple.JSONObject User){
+        try{
+            return sentGet("https://us.api.battle.net/wow/character/" + getServer(User) + "/" + getCharName(User) + "?fields=hunterPets&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd").getJSONArray("hunterPets");
+
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
     public static org.json.JSONArray getTalents(org.json.simple.JSONObject User){
         try{
             return sentGet("https://us.api.battle.net/wow/character/" + getServer(User) + "/" + getCharName(User) + "?fields=talents&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd").getJSONArray("talents");

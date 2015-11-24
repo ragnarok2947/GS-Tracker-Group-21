@@ -98,6 +98,11 @@ public class WoWCredentials extends AppCompatActivity {
             Intent intent = new Intent(this, WoWRogue.class);
             intent.putExtra(EXTRA_MESSAGE, Obj.toString());
             startActivity(intent);
+        }
+        else if(Class.equals("Hunter")){
+            Intent intent = new Intent(this, WoWHunter.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            startActivity(intent);
 
         }
 
@@ -111,8 +116,13 @@ public class WoWCredentials extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE, Obj.toString());
             return intent;
             //startActivity(intent);
-
         }
+        else if(Class.equals("Hunter")){
+            Intent intent = new Intent(context, WoWHunter.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
+        }
+
         return null;
     }
 
