@@ -50,6 +50,54 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
         </activity>
+        <activity
+            android:name=".WoW.WoWMage"
+            android:label="@string/title_activity_wo_wmage"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWShaman"
+            android:label="@string/title_activity_wo_wshaman"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWWarrior"
+            android:label="@string/title_activity_wo_wwarrior"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWDruid"
+            android:label="@string/title_activity_wo_wdruid"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWPriest"
+            android:label="@string/title_activity_wo_wpriest"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WoW.WoWWarlock"
+            android:label="@string/title_activity_wo_wwarlock"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
