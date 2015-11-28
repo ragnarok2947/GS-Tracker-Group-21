@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+                android:id="@+id/sports_game_list_root">
+
+   <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Games Played:"
+      android:id="@+id/sports_game_list_label"
+      android:textColor="@color/colorSportsText"
+      android:textSize="20sp"
+      android:textStyle="bold"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"/>
+
+   <GridView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/sports_game_list_list_labels"
+      android:numColumns="5"
+      android:layout_below="@+id/sports_game_list_label"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"/>
+
+   <GridView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/sports_game_list_list"
+      android:numColumns="5"
+      android:padding="3dp"
+      android:scrollIndicators="bottom|right"
+      android:textFilterEnabled="false"
+      android:layout_below="@+id/sports_game_list_list_labels"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
