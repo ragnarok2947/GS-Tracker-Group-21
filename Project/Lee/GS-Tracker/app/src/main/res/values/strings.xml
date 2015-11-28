@@ -6,4 +6,5 @@
     <string name="title_activity_wo_wrogue">WoWRogue</string>
     <string name="title_activity_wo_wcredentials">WoWCredentials</string>
     <string name="title_activity_wo_whunter">WoWHunter</string>
+    <string name="title_activity_wo_wpaladin">WoWPaladin</string>
 </resources>

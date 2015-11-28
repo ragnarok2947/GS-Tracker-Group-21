@@ -42,6 +42,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
         </activity>
+        <activity
+            android:name=".WoW.WoWPaladin"
+            android:label="@string/title_activity_wo_wpaladin"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

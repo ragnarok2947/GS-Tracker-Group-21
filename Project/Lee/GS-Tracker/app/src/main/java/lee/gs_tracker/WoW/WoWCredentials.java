@@ -105,6 +105,30 @@ public class WoWCredentials extends AppCompatActivity {
             startActivity(intent);
 
         }
+        else if(Class.equals("Paladin")){
+            Intent intent = new Intent(this, WoWPaladin.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            startActivity(intent);
+        }
+        else if(Class.equals("Warrior")){
+
+        }
+        else if(Class.equals("Mage")){
+
+        }
+        else if(Class.equals("Shaman")){
+
+        }
+        else if(Class.equals("Warlock")){
+
+        }
+        else if(Class.equals("Druid")){
+
+        }
+
+        else{
+            //write alert that says class currently isn't supported
+        }
 
     }
     public Intent goToTemplate(Context context, String ServerName, String CharName){
@@ -121,6 +145,30 @@ public class WoWCredentials extends AppCompatActivity {
             Intent intent = new Intent(context, WoWHunter.class);
             intent.putExtra(EXTRA_MESSAGE, Obj.toString());
             return intent;
+        }
+        else if(Class.equals("Warrior")){
+
+        }
+        else if(Class.equals("Mage")){
+
+        }
+        else if(Class.equals("Paladin")){
+            Intent intent = new Intent(context, WoWPaladin.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
+        }
+        else if(Class.equals("Warlock")){
+
+        }
+        else if(Class.equals("Shaman")){
+
+        }
+        else if(Class.equals("Druid")){
+
+        }
+
+        else{
+            //put in alert message that says that the class is not supported
         }
 
         return null;
