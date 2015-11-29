@@ -1,12 +1,6 @@
 package cop4331c.gscustom;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.database.DataSetObserver;
 import android.graphics.Color;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,33 +11,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Sports extends AppCompatActivity implements View.OnClickListener,
       QuickQuestionDialog.Listener
@@ -90,7 +75,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
 
       CustomData.Sports.LoadInit();
 
-      setTitle(getIntent().getStringExtra("gamename"));
+      if (getIntent().getStringExtra("gamename") != null)
+         setTitle(getIntent().getStringExtra("gamename"));
 
       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
@@ -237,6 +223,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             ((EditText)addGameView.findViewById(R.id.sports_add_opponent_team)).setText("");
             ((EditText)addGameView.findViewById(R.id.sports_add_your_score)).setText("");
             ((EditText)addGameView.findViewById(R.id.sports_add_opponent_score)).setText("");
+
+            findViewById(R.id.sports_add_date).setTag(null);
 
             PostInvalidateAll();
          }
@@ -399,11 +387,23 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                   rootView = gamesListView = inflater.inflate(R.layout.sports_game_list,
                                                               container, false);
                   GridView gv = (GridView) rootView.findViewById(R.id.sports_game_list_list_labels);
-                  gv.setAdapter(
-                        new ArrayAdapter<String>(getContext(), R.layout.sports_game_list_label,
-                               new String[]{"Date", "Your Team", "Your Score",
-                               "Opponent Team" , "Opponent Score"})
-                  );
+                  ArrayAdapter<String> aa =
+                     new ArrayAdapter<String>(getContext(), R.layout.sports_game_list_label,
+                                              new String[]{"Date", "Your Team", "Your Score",
+                                                    "Opponent Team" , "Opponent Score"}){
+                        @Override
+                        public boolean isEnabled(int position)
+                        {
+                           return false;
+                        }
+
+                        @Override
+                        public boolean areAllItemsEnabled()
+                        {
+                           return false;
+                        }
+                     };
+                  gv.setAdapter(aa);
 
                   gv = (GridView) rootView.findViewById(R.id.sports_game_list_list);
                   gamesListAdapter = new GamesListAdapter();
@@ -467,7 +467,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       @Override
       public int getCount()
       {
-         return 5 * CustomData.Sports.GetGamesList().size();
+         return 5 * (CustomData.Sports.GetGamesList().size() + 1);
       }
 
       @Override
@@ -480,26 +480,33 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                            AbsListView.LayoutParams.WRAP_CONTENT
                      );
 
-         CustomData.Sports.Game g = CustomData.Sports.GetGamesList().get(position / 5);
          TextView tv = new TextView(parent.getContext());
          convertView = tv;
          tv.setLayoutParams(params);
-         if (position % 5 == 0)
-            tv.setText(g.month + " / " + g.day + " / " + g.year);
-         else if (position % 5 == 1)
-            tv.setText(g.yourTeam);
-         else if (position % 5 == 2)
-            tv.setText(g.yourScore + "");
-         else if (position % 5 == 3)
-            tv.setText(g.opponentTeam);
-         else if (position % 5 == 4)
-            tv.setText(g.opponentScore + "");
-         tv.setTag(position / 5);
-         tv.setOnLongClickListener(this);
-         tv.setTextColor(instance.getResources().getColor(R.color.colorSportsTextHint));
-         tv.setMinLines(1);
+
+         if (position < 5 * CustomData.Sports.GetGamesList().size())
+         {
+            CustomData.Sports.Game g = CustomData.Sports.GetGamesList().get(position / 5);
+            if (position % 5 == 0)
+               tv.setText(g.month + " / " + g.day + " / " + g.year);
+            else if (position % 5 == 1)
+               tv.setText(g.yourTeam);
+            else if (position % 5 == 2)
+               tv.setText(g.yourScore + "");
+            else if (position % 5 == 3)
+               tv.setText(g.opponentTeam);
+            else if (position % 5 == 4)
+               tv.setText(g.opponentScore + "");
+            tv.setTag(position / 5);
+            tv.setOnLongClickListener(this);
+            tv.setTextColor(instance.getResources().getColor(R.color.colorSportsTextHint));
+         }
+         else
+         {
+            tv.setText("");
+            tv.setEnabled(false);
+         }
          tv.setLines(3);
-         tv.setMaxLines(3);
 
          return convertView;
       }
@@ -507,7 +514,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       @Override
       public boolean hasStableIds()
       {
-         return true;
+         return false;
       }
 
       @Override
@@ -544,13 +551,14 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       @Override
       public long getItemId(int position)
       {
-         return position / 5;
+         return position;
       }
 
       @Override
       public Object getItem(int position)
       {
-         return CustomData.Sports.GetGamesList().get(position / 5);
+         return position < 5 * CustomData.Sports.GetGamesList().size() ?
+               CustomData.Sports.GetGamesList().get(position / 5) : null;
       }
    }
 
@@ -561,7 +569,14 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       @Override
       public int getCount()
       {
-         return CustomData.Sports.GetGamesList().size() > 0 ? 2 * numStats : 0;
+         try
+         {
+            return CustomData.Sports.GetGamesList().size() > 0 ? 2 * numStats : 0;
+         }
+         catch (Exception e)
+         {
+            return 0;
+         }
       }
 
       @Override

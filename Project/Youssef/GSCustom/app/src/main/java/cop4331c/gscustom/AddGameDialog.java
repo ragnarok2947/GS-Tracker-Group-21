@@ -4,11 +4,15 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +29,8 @@ import android.widget.Toast;
 public class AddGameDialog extends DialogFragment implements DialogInterface.OnClickListener,
       AdapterView.OnItemClickListener
 {
+   private AddGameDialog instance;
+
    AlertDialog.Builder dialogBuilder = null;
    AlertDialog dialog = null;
    LinearLayout dialogView = null;
@@ -35,6 +41,7 @@ public class AddGameDialog extends DialogFragment implements DialogInterface.OnC
 
    public AddGameDialog()
    {
+      instance = this;
       onCreateDialog(null);
    }
 
@@ -54,6 +61,11 @@ public class AddGameDialog extends DialogFragment implements DialogInterface.OnC
 
       dialog = dialogBuilder.create();
 
+      dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE  |
+                                          WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+      dialog.getWindow().setSoftInputMode(WindowManager.
+                                                LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
       try
       {
          dialogList = (ListView) ((LinearLayout) dialogView.getChildAt(2)).getChildAt(1);
@@ -66,6 +78,8 @@ public class AddGameDialog extends DialogFragment implements DialogInterface.OnC
          e.printStackTrace();
       }
 
+      dialogList.setOnItemClickListener(this);
+
       if (dialog != null)
       {
          if (dialogList != null)
@@ -75,8 +89,11 @@ public class AddGameDialog extends DialogFragment implements DialogInterface.OnC
                            R.color.colorPopupText
                      )
                );
-         dialogList.setOnItemClickListener(this);
+
          dialog.show();
+
+         EditText t = (EditText) dialog.findViewById(R.id.dialog_add_game_name);
+         t.requestFocus();
       }
 
       return dialog;
@@ -132,6 +149,12 @@ public class AddGameDialog extends DialogFragment implements DialogInterface.OnC
          /*Toast.makeText(GSCustom.instance, "name: " + gameName + "\ntype: " +
                               gameType, Toast.LENGTH_SHORT).show();*/
       }
+
+
+      InputMethodManager imm = (InputMethodManager) GSCustom.instance
+            .getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(
+            instance.dialog.findViewById(R.id.dialog_add_game_name).getWindowToken(), 0);
    }
 
    public String GetGameName()

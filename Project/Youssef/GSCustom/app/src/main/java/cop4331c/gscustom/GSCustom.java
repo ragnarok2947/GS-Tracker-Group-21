@@ -219,9 +219,15 @@ public class GSCustom extends AppCompatActivity implements View.OnClickListener,
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
       {
          CustomData.SetActiveProfile(position);
+         Intent intent = null;
          if (CustomData.GetProfileType(position) == CustomData.SPORTS)
+            intent = new Intent(GSCustom.instance, Sports.class);
+         else if (CustomData.GetProfileType(position) == CustomData.RPG)
+            intent = new Intent(GSCustom.instance, RpgNotes.class);
+         else if (CustomData.GetProfileType(position) == CustomData.SHOOTER)
+            intent = new Intent(GSCustom.instance, Shooter.class);
+         if (intent != null)
          {
-            Intent intent = new Intent(GSCustom.instance, Sports.class);
             intent.putExtra("gamename", CustomData.GetProfileName(position));
             intent.putExtra("gametype", CustomData.GetProfileType(position));
             GSCustom.instance.startActivity(intent);

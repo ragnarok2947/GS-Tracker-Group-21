@@ -1,9 +1,13 @@
 Custom Profiles (Sports, RPG, Shooter);
 
-Cannot make it very elaborate as was mentioned, already invested too
-much time in sports profile.
+latest changes:
 
-known bug in sports profile: last entry in games list does not show
+fixed keyboard not showing up in "add game profile" dialog
 
-thinking about just creating quest notes for rpg, and perhaps very simple
-num kills / num deaths / compute ratio for shooter
+realized "bug" with last item not showing up in sports game list is due to
+the way android lays out gridviews and after toying around with the xml for
+a long time gave up and created a workaround by inserting a dummy field as
+the last item in the list
+
+created dummy activities for rpg and shooter activities and linked them to the
+GSCustom main activity

@@ -15,14 +15,16 @@
       android:layout_alignParentTop="true"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
-      android:textColor="@color/colorSportsText"/>
+      android:textColor="@color/colorSportsText"
+      android:focusable="false"
+      android:focusableInTouchMode="false"/>
 
    <Button
       style="?android:attr/buttonStyleSmall"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="[Select Date]"
       android:id="@+id/sports_add_date"
+      android:text="[Select Date]"
       android:layout_alignParentTop="true"
       android:layout_toRightOf="@+id/sports_add_your_team_label"
       android:layout_toEndOf="@+id/sports_add_your_team_label"
@@ -37,7 +39,9 @@
       android:textColorHighlight="#FFFFFF"
       android:textColorHint="@color/colorSportsTextHint"
       android:paddingLeft="10dp"
-      android:paddingRight="10dp"/>
+      android:paddingRight="10dp"
+      android:focusable="false"
+      android:focusableInTouchMode="false"/>
 
    <AutoCompleteTextView
       android:layout_width="wrap_content"
@@ -51,7 +55,12 @@
       android:textColor="@color/colorSportsEditText"
       android:hint="[Enter Team Name]"
       android:textColorHint="@color/colorSportsTextHint"
-      android:singleLine="true"/>
+      android:singleLine="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:enabled="true"
+      android:inputType="text"
+      android:imeOptions="actionNext"/>
 
    <TextView
       android:layout_width="wrap_content"
@@ -63,7 +72,10 @@
       android:layout_alignParentStart="true"
       android:layout_below="@+id/sports_add_date"
       android:layout_marginTop="5dp"
-      android:textColor="@color/colorSportsText"/>
+      android:textColor="@color/colorSportsText"
+      android:singleLine="true"
+      android:focusable="false"
+      android:focusableInTouchMode="false"/>
 
    <TextView
       android:layout_width="wrap_content"
@@ -74,7 +86,10 @@
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_marginTop="5dp"
-      android:textColor="@color/colorSportsText"/>
+      android:textColor="@color/colorSportsText"
+      android:singleLine="true"
+      android:focusable="false"
+      android:focusableInTouchMode="false"/>
 
    <AutoCompleteTextView
       android:layout_width="wrap_content"
@@ -89,7 +104,12 @@
       android:textColor="@color/colorSportsEditText"
       android:hint="[Enter Team Name]"
       android:textColorHint="@color/colorSportsTextHint"
-      android:singleLine="true"/>
+      android:singleLine="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:enabled="true"
+      android:inputType="text"
+      android:imeOptions="actionNext"/>
 
    <TextView
       android:layout_width="wrap_content"
@@ -100,7 +120,10 @@
       android:layout_below="@+id/sports_add_opponent_team"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
-      android:textColor="@color/colorSportsText"/>
+      android:textColor="@color/colorSportsText"
+      android:focusable="false"
+      android:focusableInTouchMode="false"
+      android:singleLine="true"/>
 
    <TextView
       android:layout_width="wrap_content"
@@ -111,13 +134,15 @@
       android:layout_alignRight="@+id/sports_add_your_team_label"
       android:layout_alignEnd="@+id/sports_add_your_team_label"
       android:layout_marginTop="5dp"
-      android:textColor="@color/colorSportsText"/>
+      android:textColor="@color/colorSportsText"
+      android:focusable="false"
+      android:focusableInTouchMode="false"
+      android:singleLine="true"/>
 
    <EditText
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/sports_add_your_score"
-      android:inputType="number"
       android:layout_alignTop="@+id/sports_add_your_score_label"
       android:layout_alignLeft="@+id/sports_add_opponent_team"
       android:layout_alignStart="@+id/sports_add_opponent_team"
@@ -125,13 +150,17 @@
       android:textColor="@color/colorSportsEditText"
       android:hint="[Score]"
       android:textColorHint="@color/colorSportsTextHint"
-      android:singleLine="true"/>
+      android:singleLine="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:enabled="true"
+      android:inputType="number"
+      android:imeOptions="actionNext"/>
 
    <EditText
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/sports_add_opponent_score"
-      android:inputType="number"
       android:layout_alignTop="@+id/sports_add_opponent_score_label"
       android:layout_alignLeft="@+id/sports_add_your_score"
       android:layout_alignStart="@+id/sports_add_your_score"
@@ -139,7 +168,12 @@
       android:textColor="@color/colorSportsEditText"
       android:hint="[Score]"
       android:textColorHint="@color/colorSportsTextHint"
-      android:singleLine="true"/>
+      android:singleLine="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:enabled="true"
+      android:inputType="number"
+      android:imeOptions="actionNext"/>
 
    <Button
       android:layout_width="wrap_content"
@@ -153,6 +187,8 @@
       android:background="@color/colorPrimary"
       android:textColor="@color/colorSportsTextHint"
       android:paddingLeft="5dp"
-      android:paddingRight="5dp"/>
+      android:paddingRight="5dp"
+      android:focusable="false"
+      android:focusableInTouchMode="false"/>
 
 </RelativeLayout>

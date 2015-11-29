@@ -51,10 +51,15 @@
             android:id="@+id/dialog_add_game_name"
             android:text=""
             android:inputType="text"
+            android:imeOptions="actionDone"
             android:fontFamily="sans-serif"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:textIsSelectable="true"/>
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:enabled="true"
+            android:singleLine="true"/>
 
       </LinearLayout>
 

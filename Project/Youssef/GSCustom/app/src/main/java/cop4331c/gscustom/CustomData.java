@@ -494,6 +494,88 @@ public class CustomData
 
    static class Rpg
    {
+      static class Quest
+      {
+         String name;
+         String note;
+         boolean complete;
+      }
 
+      static ArrayList<Quest> quests;
+
+      public static boolean LoadInit()
+      {
+         quests = new ArrayList<Quest>();
+
+         try
+         {
+            if (data.getJSONObject(pi).getInt("type") != CustomData.RPG)
+            {
+               Toast.makeText(context, "not an rpg profile", Toast.LENGTH_SHORT).show();
+               return false;
+            }
+            JSONArray jQuests = new JSONArray(data.getJSONObject(pi).getString("quests"));
+            for (int i = 0; i < jQuests.length(); i++)
+            {
+               JSONObject jGame = jQuests.getJSONObject(i);
+               Quest q = new Quest();
+               q.name = jGame.getString("name");
+               q.note = jGame.getString("note");
+               q.complete = jGame.getBoolean("complete");
+               quests.add(q);
+            }
+         }
+         catch (Exception e)
+         {
+            e.printStackTrace();
+            Toast.makeText(GSCustom.instance, "error loading rpg profiles:\n" + e.toString(),
+                           Toast.LENGTH_LONG).show();
+         }
+
+         return true;
+      }
+
+      public static int UpdateUnload()
+      {
+         int resCount = 0;
+         try
+         {
+            JSONArray jQuests = new JSONArray();
+            for (int i = 0; i < quests.size(); i++)
+            {
+               Quest q = quests.get(i);
+               JSONObject jQuest = new JSONObject();
+               jQuest.put("name", q.name);
+               jQuest.put("note", q.note);
+               jQuest.put("complete", q.complete);
+               jQuests.put(jQuest);
+            }
+            data.getJSONObject(pi).put("quests", jQuests);
+            resCount = quests.size();
+         } catch (Exception e)
+         {
+            Toast.makeText(
+                  context, "failed to save profile data\n" + e.toString(),
+                  Toast.LENGTH_LONG
+            ).show();
+            resCount = -1;
+         }
+         quests = null;
+
+         return resCount;
+      }
+
+      public static int GetNumQuests()
+      {
+         return quests.size();
+      }
+
+      public static Quest GetQuest(String qName)
+      {
+         for (Quest q : quests)
+            if (q.name.compareToIgnoreCase(qName) == 0)
+               return q;
+         return null;
+      }
    }
 }
