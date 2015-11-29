@@ -86,7 +86,6 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
          getSupportActionBar().setBackgroundDrawable(getResources()
                                                            .getDrawable(R.drawable.color_primary));
-
       }
       catch (Exception e)
       {

@@ -565,9 +565,30 @@ public class CustomData
          return resCount;
       }
 
+      public static boolean AddQuest(String qName)
+      {
+         if (GetQuest(qName) != null)
+            return false;
+         Quest q = new Quest();
+         q.name = qName;
+         q.note = "";
+         q.complete = false;
+         quests.add(q);
+         return true;
+      }
+
       public static int GetNumQuests()
       {
          return quests.size();
+      }
+
+      public static int GetNumCompleteQuests()
+      {
+         int compCount = 0;
+         for (Quest q : quests)
+            if (q.complete)
+               compCount++;
+         return compCount;
       }
 
       public static Quest GetQuest(String qName)
@@ -576,6 +597,35 @@ public class CustomData
             if (q.name.compareToIgnoreCase(qName) == 0)
                return q;
          return null;
+      }
+
+      public static boolean RemoveQuest(String qName)
+      {
+         boolean removed = false;
+         for (int i = 0; i < quests.size();)
+            if (quests.get(i).name.compareToIgnoreCase(qName) == 0)
+            {
+               quests.remove(i);
+               removed = true;
+            }
+            else
+               i++;
+         return removed;
+      }
+
+      public static void MarkQuestComplete(String qName, boolean isComplete)
+      {
+         Quest q;
+         if ((q = GetQuest(qName)) != null)
+            q.complete = isComplete;
+      }
+
+      public static String[] GetAllQuestNames()
+      {
+         String[] qNames = new String[GetNumQuests()];
+         for (int i = 0; i < GetNumQuests(); i++)
+            qNames [i] = quests.get(i).name;
+         return qNames;
       }
    }
 }

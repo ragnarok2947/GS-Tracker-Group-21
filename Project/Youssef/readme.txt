@@ -11,3 +11,5 @@ the last item in the list
 
 created dummy activities for rpg and shooter activities and linked them to the
 GSCustom main activity
+
+finished sports and rpg profiles

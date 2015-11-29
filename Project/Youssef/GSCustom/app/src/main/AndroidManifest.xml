@@ -38,7 +38,14 @@
          android:theme="@style/AppTheme.NoActionBar"
          android:windowSoftInputMode="stateHidden|adjustResize">
       </activity>
-      <activity android:name=".RpgNotes">
+      <activity
+         android:name=".RpgNotes"
+         android:label="@string/title_activity_shooter"
+         android:parentActivityName=".GSCustom"
+         android:theme="@style/AppTheme">
+         <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="cop4331c.gscustom.GSCustom"/>
       </activity>
       <activity
          android:name=".Shooter"
