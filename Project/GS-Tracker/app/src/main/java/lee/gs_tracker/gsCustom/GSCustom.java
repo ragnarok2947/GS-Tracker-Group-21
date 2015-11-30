@@ -36,11 +36,6 @@ public class GSCustom extends AppCompatActivity implements QuickQuestionDialog.L
 {
    // static instance of active GSCustom object
    public static GSCustom instance;
-   /**
-    * ATTENTION: This was auto-generated to implement the App Indexing API.
-    * See https://g.co/AppIndexing/AndroidStudio for more information.
-    */
-   private GoogleApiClient client;
 
    // Objects stored at class scope for convenience / necessity
    ListView gameList = null;
@@ -73,6 +68,7 @@ public class GSCustom extends AppCompatActivity implements QuickQuestionDialog.L
                                                     .getColor(R.color.colorPrimary));
 
       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbar.setTitle(R.string.title_gs_custom);
       setSupportActionBar(toolbar);
 
       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -87,9 +83,6 @@ public class GSCustom extends AppCompatActivity implements QuickQuestionDialog.L
                }
             }
       );
-      // ATTENTION: This was auto-generated to implement the App Indexing API.
-      // See https://g.co/AppIndexing/AndroidStudio for more information.
-      client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
    }
 
    // write out CustomData to disk
