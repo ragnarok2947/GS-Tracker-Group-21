@@ -92,7 +92,9 @@ public class MyCustomAdapter extends BaseExpandableListAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_child, viewGroup,false);
         }
-
+        view.setClickable(false);
+        view.setFocusable(false);
+        view.setFocusableInTouchMode(false);
         TextView textView = (TextView) view.findViewById(R.id.list_item_text_child);
         textView.setText(mParent.get(groupPosition).getArrayChildren().get(childPosition).Title);
 

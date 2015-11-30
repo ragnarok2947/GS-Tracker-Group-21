@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import lee.gs_tracker.WoW.WoWCredentials;
 import lee.gs_tracker.gsCustom.GSCustom;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+      ExpandableListView.OnChildClickListener {
     private ExpandableListView mExpandableList;
 
     @Override
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         //sets the adapter that provides data to the list.
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
-
+        mExpandableList.setOnChildClickListener(this);
     }
     public File createFile(String FileName, String Data){
 
@@ -95,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return file;
     }
-    public void goToStat(View view){
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id)
+    {
         String TagName = view.getTag().toString();
 
         if(TagName == "WoW") {
@@ -125,10 +129,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GSCustom.class);
             startActivity(intent);
         }
-
-
+        return true;
     }
-
 
     public void writeToFile(String FileName, String Data){
         FileOutputStream Writer;
