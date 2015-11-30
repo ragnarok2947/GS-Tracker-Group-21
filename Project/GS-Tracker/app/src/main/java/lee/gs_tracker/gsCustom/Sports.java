@@ -1,20 +1,22 @@
 package lee.gs_tracker.gsCustom;
 
 import android.graphics.Color;
-import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,7 +29,22 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import lee.gs_tracker.R;
+
+/**
+ * Created by Joe Paul on 11/25/2015.
+ *
+ * manages and displays a sports game profile
+ *
+ * allows the user to track a list of games; the user specifies the date the game is played,
+ *    the team the user is playing as, the team the user is playing against, the user's score,
+ *    and the opposing teams score
+ * displays the list of all games played and computes some basic statistics over the list of games
+ * allows the user to delete a single game entry by long click on the entry in the games list,
+ *    but would have to delete the profile in GSCustom if wants to clear them all at once
+ */
+
 public class Sports extends AppCompatActivity implements View.OnClickListener,
       QuickQuestionDialog.Listener
 {
@@ -40,8 +57,10 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
     */
 
+   // static instance of Sports object
    static Sports instance = null;
 
+   // views / objects in class score for ease/necessity of accessibility
    static View addGameView;
    static View gamesListView;
    static View gameStatsView;
@@ -62,8 +81,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       super.onCreate(savedInstanceState);
 
       setContentView(R.layout.sports_activity);
-      instance = this;
+      instance = this; // set instance to current Sports object
 
+      // initialize all static views/objects to null upon new instance
       addGameView = null;
       gamesListView = null;
       gameStatsView = null;
@@ -71,11 +91,13 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       gamesListAdapter = null;
       gameStatsAdapter = null;
 
-      CustomData.Sports.LoadInit();
+      CustomData.Sports.LoadInit(); // load sports profile data
 
+      // set game profile name as title as string received from GSCustom
       if (getIntent().getStringExtra("gamename") != null)
          setTitle(getIntent().getStringExtra("gamename"));
 
+      // add a back button to the toolbar
       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
       try
@@ -102,23 +124,23 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
    }
 
    @Override
-   protected void onResume()
+   protected void onResume() // reload profile data from CustomData
    {
       super.onResume();
 
       CustomData.Sports.LoadInit();
-      Toast.makeText(this, "loaded " + CustomData.Sports.GetGamesList().size() + " sports game " +
-            "entries", Toast.LENGTH_SHORT).show();
+      /*Toast.makeText(this, "loaded " + CustomData.Sports.GetGamesList().size() + " sports game " +
+            "entries", Toast.LENGTH_SHORT).show();*/
    }
 
    @Override
-   protected void onStop()
+   protected void onStop() // write out profile data to CustomData
    {
       super.onStop();
 
       int numWritten = CustomData.Sports.UpdateUnload();
-      Toast.makeText(this, "written " + numWritten + " sports games entries", Toast.LENGTH_SHORT)
-            .show();
+      /*Toast.makeText(this, "written " + numWritten + " sports games entries", Toast.LENGTH_SHORT)
+            .show();*/
    }
 
    @Override
@@ -146,23 +168,11 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       return super.onOptionsItemSelected(item);
    }
 
-   public static void InvalidateRec(View v)
-   {
-      if (v != null)
-      {
-         if (v instanceof ViewGroup)
-         {
-            ViewGroup vg = (ViewGroup) v;
-            for (int i = 0; i < vg.getChildCount(); i++)
-               InvalidateRec(vg.getChildAt(i));
-         }
-         v.postInvalidate();
-      }
-   }
-
    @Override
    public void onClick(View v)
    {
+      // button click to select data, creates a DatePicker view and passes it as a custom view
+      //    to QuickQuestionDialog, handled further down in onQuickQuestionDialogListener
       if (v.getId() == R.id.sports_add_date)
       {
          DatePicker dp = new DatePicker(this);
@@ -170,13 +180,14 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          dp.setSpinnersShown(true);
          new QuickQuestionDialog(this, "getdate", this, dp, "Enter a Date...", new int[]{-1, 0});
       }
-      else if (v.getId() == R.id.sports_add_add)
+      else if (v.getId() == R.id.sports_add_add) // user hits add game button
       {
          String yourTeam = null, opponentTeam = null;
          int day = -1, month = -1, year = -1, yourScore = -1, opponentScore = -1;
          Boolean valid = true;
          try
          {
+            // retrieve user input from android view elements
             yourTeam = ((EditText) addGameView.findViewById(R.id.sports_add_your_team))
                   .getText().toString();
             opponentTeam = ((EditText) addGameView.findViewById(
@@ -200,12 +211,15 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             }
          }
          catch (Exception e) {valid = false;}
+
+         // validate user input, all fields must be filled, not null, date must be picked
          if (yourTeam == null || yourTeam.length() == 0 || opponentTeam == null ||
                opponentTeam.length() == 0 || yourScore < 0 || opponentScore < 0 ||
                day == -1 || month == -1 || year == -1)
             valid = false;
          if (valid)
          {
+            // add game to CustomData.Sports
             CustomData.Sports.AddGame(
                   month, day, year, yourTeam, opponentTeam, yourScore,
                   opponentScore
@@ -214,22 +228,25 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                   Sports.instance, "Added " + year + "-" + month + "-" + day + ": " +
                         yourTeam + " VS. " + opponentTeam, Toast.LENGTH_SHORT
             ).show();
+
+            // clear all input view elements
             ((Button)addGameView.findViewById(R.id.sports_add_date))
                   .setText("[Click To Set Date]");
             ((EditText)addGameView.findViewById(R.id.sports_add_your_team)).setText("");
             ((EditText)addGameView.findViewById(R.id.sports_add_opponent_team)).setText("");
             ((EditText)addGameView.findViewById(R.id.sports_add_your_score)).setText("");
             ((EditText)addGameView.findViewById(R.id.sports_add_opponent_score)).setText("");
-
             findViewById(R.id.sports_add_date).setTag(null);
 
-            PostInvalidateAll();
+            PostInvalidateAll(); // refresh all UI elements
          }
+         // else if data invalid, notify user of invalid data
          else
             new QuickQuestionDialog(this, null, null, "Invalid Data.", "uh-oh...", new int[]{0});
       }
    }
 
+   // updates all UI elements
    private void PostInvalidateAll()
    {
       if (teamAutoCompleteAdapter != null)
@@ -241,19 +258,21 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       {
          gamesListAdapter.notifyDataSetInvalidated();
          gamesListAdapter.notifyDataSetChanged();
-         InvalidateRec(gamesListView);
+         GSCustom.InvalidateRec(gamesListView);
       }
       if (gameStatsView != null)
       {
          gameStatsAdapter.notifyDataSetInvalidated();
          gameStatsAdapter.notifyDataSetChanged();
-         InvalidateRec(gameStatsView);
+         GSCustom.InvalidateRec(gameStatsView);
       }
    }
 
    @Override
    public void onQuickQuestionDialogClick(String name, int response, Object tag)
    {
+      // user has selected a date, extract date from DatePicker view object as QuickQuestionDialog
+      //    tag and set Date Button text to date selected
       if (name.equals("getdate") && response >= 0)
       {
          Button dateButt = (Button) addGameView.findViewById(R.id.sports_add_date);
@@ -261,8 +280,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          dateButt.setText((dp.getMonth() + 1) + " / " + dp.getDayOfMonth() + " / " + dp.getYear());
          dateButt.setTextColor(getResources().getColor(R.color.colorSportsText));
          dateButt.setTag(tag);
-         findViewById(R.id.sports_add_root).postInvalidate();
+         findViewById(R.id.sports_add_root).postInvalidate(); // refresh date button ui
       }
+      // confirmed request to delete a game entry, delete the entry
       else if (name.equals("deletesportsgameentry") && response == 1)
       {
          Toast.makeText(
@@ -274,7 +294,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                Toast.LENGTH_SHORT).show();
          CustomData.Sports.DeleteIndex((int) tag);
 
-         PostInvalidateAll();
+         PostInvalidateAll(); // refresh ui
       }
    }
 
@@ -306,7 +326,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          return fragment;
       }
 
-      private int Dp(int px)
+      private int Dp(int px) // converts pixels to android device-independent pixels
       {
          return (int) TypedValue.applyDimension(
                TypedValue.COMPLEX_UNIT_DIP, 14,
@@ -335,6 +355,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
 
          switch (getArguments().getInt(ARG_SECTION_NUMBER))
          {
+            // section 1 - add game, inflate, initialize all view elements and data
             case 0:
             {
                if (gamesListView != null)
@@ -349,32 +370,40 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                dateButt.setText("[Select Date]");
                dateButt.setOnClickListener(Sports.instance);
 
+               // autocompletetextviews for your team and opponent team allows team suggestions
+               //    as the user types
                AutoCompleteTextView yTeamName = (AutoCompleteTextView) rootView
                      .findViewById(R.id.sports_add_your_team);
                AutoCompleteTextView oTeamName = (AutoCompleteTextView) rootView
                      .findViewById(R.id.sports_add_opponent_team);
 
+               // adapter for autocompletetext views set to CustomData.Sports.GetAllTeams()
                teamAutoCompleteAdapter = new ArrayAdapter<String>
                      (
                            getContext(), android.R.layout.simple_list_item_1,
                            CustomData.Sports.GetAllTeams()
                      );
 
+               // set adapter for autocompletetextviews
                yTeamName.setAdapter(teamAutoCompleteAdapter);
-               yTeamName.setThreshold(1);
+               yTeamName.setThreshold(1); // can't quite remember what this does
                yTeamName.setText("");
                oTeamName.setAdapter(teamAutoCompleteAdapter);
                oTeamName.setThreshold(1);
                oTeamName.setText("");
 
+               // clear score edittexts
                ((EditText) rootView.findViewById(R.id.sports_add_your_score)).setText("");
                ((EditText) rootView.findViewById(R.id.sports_add_opponent_score)).setText("");
 
+               // set add button onclick listener
                Button addButt = (Button) rootView.findViewById(R.id.sports_add_add);
                addButt.setOnClickListener(Sports.instance);
 
                break;
             }
+
+            // section 2 - list of games
             case 1:
             {
                if (gamesListView != null)
@@ -384,6 +413,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                   rootView = gamesListView = inflater.inflate(R.layout.sports_game_list,
                                                               container, false);
                   GridView gv = (GridView) rootView.findViewById(R.id.sports_game_list_list_labels);
+
+                  // adapter for header gridview overrides 2 methods so that header list items
+                  //    are not selectable
                   ArrayAdapter<String> aa =
                      new ArrayAdapter<String>(getContext(), R.layout.sports_game_list_label,
                                               new String[]{"Date", "Your Team", "Your Score",
@@ -402,6 +434,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                      };
                   gv.setAdapter(aa);
 
+                  // gridview for list
                   gv = (GridView) rootView.findViewById(R.id.sports_game_list_list);
                   gamesListAdapter = new GamesListAdapter();
                   gv.setAdapter(gamesListAdapter);
@@ -409,6 +442,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
 
                break;
             }
+
+            // section 3 - stats
             case 2:
             {
                rootView = gameStatsView = inflater.inflate(R.layout.sports_stats,
@@ -424,6 +459,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             }
          }
 
+         // error view returned in case none of above apply (was placeholder mid-development)
          if (rootView == null)
          {
             rootView = new TextView(getContext());
@@ -445,9 +481,12 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       }
    }
 
+   // adapter class for games list
    static class GamesListAdapter extends BaseAdapter implements ListAdapter,
          View.OnLongClickListener
    {
+      // user deletes item in games list by long click, display QuickQuestionDialog confirmation,
+      //    handle response with onQuickQuestionDialog listener further down
       @Override
       public boolean onLongClick(View v)
       {
@@ -461,6 +500,13 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          return true;
       }
 
+      // each row corresponds to a single game entry and has 5 colums, a date, your team name,
+      //    your score, opponent team name, and opponent score;
+      // a dummy row is added (+1) as a workaround because the item in the last row is displayed
+      //    off screen (i suppose because of the way android lays out gridviews, i toyed with it
+      //    and there doesn't seem to be a way to change their height; they seem to have to
+      //    occupy their entire parent and since I also have a label and a header gridview in the
+      //    view parent, it pushes the list off screen)
       @Override
       public int getCount()
       {
@@ -481,6 +527,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          convertView = tv;
          tv.setLayoutParams(params);
 
+         // set text of view element appropriately according to column for
+         //    views within range of data
          if (position < 5 * CustomData.Sports.GetGamesList().size())
          {
             CustomData.Sports.Game g = CustomData.Sports.GetGamesList().get(position / 5);
@@ -498,6 +546,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             tv.setOnLongClickListener(this);
             tv.setTextColor(instance.getResources().getColor(R.color.colorSportsTextHint));
          }
+         // otherwise if view position is out of data range, create dummy view
          else
          {
             tv.setText("");
@@ -559,6 +608,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       }
    }
 
+   // an adapter for the gridview that displays stats in section 3
    static class StatAdapter extends BaseAdapter
    {
       private final int numStats = 11;
@@ -606,6 +656,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                               AbsListView.LayoutParams.WRAP_CONTENT
                         )
                );
+
+         // labels, first column in gridview
          if (position % 2 == 0)
          {
             String[] labels = new String[]
@@ -621,6 +673,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                tv.setText("errpr");
             tv.setTextColor(Color.parseColor("#D0D0D0"));
          }
+         // numeric field, second column in gridview
          else
          {
             tv.setTextColor(Color.parseColor("#B0B0B0"));

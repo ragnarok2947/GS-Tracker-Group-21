@@ -10,7 +10,7 @@
    android:paddingTop="@dimen/activity_vertical_margin"
    tools:context=".RpgNotes"
    android:background="@color/colorPrimaryDark"
-   android:textAlignment="textStart">
+   android:id="@+id/notes_root">
 
    <TextView
       android:layout_width="wrap_content"
@@ -82,7 +82,9 @@
       android:textColor="@color/colorSportsEditText"
       android:gravity="top"
       android:enabled="false"
-      android:hint="[Select an existing quest or add a new quest to modify notes]"/>
+      android:hint="[Select an existing quest or add a new quest to modify notes]"
+      android:paddingLeft="5dp"
+      android:paddingRight="5dp"/>
 
    <CheckBox
       android:layout_width="wrap_content"

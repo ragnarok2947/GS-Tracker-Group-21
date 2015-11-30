@@ -13,9 +13,23 @@ import java.util.Random;
 
 /**
  * Created by Joe Paul on 11/24/2015.
+ *
+ * manages data for all custom profiles
+ * main class reads/writes data to/from disk and nested subclasses to manage data for each
+ *    profile type
+ *
+ * data is stored in the CustomData class in the form of a JSONObject which is read and written
+ *    to/from a text file
+ * data in each profile subclass is extracted from a JSONObject in the gameList array to a more
+ *    familiar java representation and written back to a JSONObject in the array upon calling
+ *    ProfileSubclass.UpdateUnload
+ *
+ * CustomData, all subclasses and supporting objects are static and mostly public so that they may
+ *    be referenced by any class or method within any scope
  */
 public class CustomData
 {
+   // game profile entry, contains a name, profile type, and unique id
    static class GameListEntry
    {
       String name;
@@ -26,11 +40,13 @@ public class CustomData
                                  {name = n; type = t; stringType = GAMETYPE [t]; id = d; }
    }
 
+   // constants corresponding to profile types
    public static final int SPORTS = 0;
    public static final int SHOOTER = 1;
    public static final int RPG = 2;
    public static final String[] GAMETYPE = {"Sports", "Shooter", "RPG"};
 
+   // context used for displaying Toast messages
    private static Context context;
    private static Random rnd = null;
    private static JSONArray data = null;
@@ -48,6 +64,7 @@ public class CustomData
       data = new JSONArray();
    }
 
+   // read data from disk to the JSONArray data
    public static boolean ReadDataInit()
    {
       if (data == null)
@@ -59,15 +76,17 @@ public class CustomData
             fis.read(byteData);
             data = new JSONArray(new String(byteData));
             fis.close();
-            Toast.makeText(context, "loaded " + (data.length()) + " profiles", Toast.LENGTH_SHORT)
-                  .show();
+            /*Toast.makeText(context, "loaded " + (data.length()) + " profiles", Toast.LENGTH_SHORT)
+                  .show();*/
          } catch (Exception e)
          {
-            e.printStackTrace();
+            /*e.printStackTrace();
             Toast.makeText(
                   context, "unable to load custom data; " + e.toString(),
                   Toast.LENGTH_LONG
-            ).show();
+            ).show();*/
+
+            // creates a new JSONArray game list if error
             data = new JSONArray();
             return false;
          }
@@ -76,6 +95,7 @@ public class CustomData
       return true;
    }
 
+   // write JSONArray data out to disk
    public static boolean WriteData()
    {
       try
@@ -84,19 +104,20 @@ public class CustomData
                                 Context.MODE_PRIVATE);
          fos.write(data.toString().getBytes());
          fos.close();
-         Toast.makeText(context, "written " + data.length() + " profiles", Toast.LENGTH_SHORT)
-               .show();
+         /*Toast.makeText(context, "written " + data.length() + " profiles", Toast.LENGTH_SHORT)
+               .show();*/
       }
       catch (Exception e)
       {
          e.printStackTrace();
          Toast.makeText(context, "unable to save custom data; " + e.toString()
-               , Toast.LENGTH_LONG).show();
+               , Toast.LENGTH_SHORT).show();
          return false;
       }
       return true;
    }
 
+   // updates ArrayList<GameListEntry> gameList (used for convenience) from JSONArray data
    public static void RefreshGameList()
    {
       gameList = new ArrayList<GameListEntry>();
@@ -112,17 +133,20 @@ public class CustomData
       }
    }
 
+   // returns the entire gameList
    public static ArrayList<GameListEntry> GetGameList()
    {
       RefreshGameList();
       return gameList;
    }
 
+   // returns number of profiles
    public static int GetNumProfiles()
    {
       return data != null ? data.length() : 0;
    }
 
+   // returns the profile name at a certain index
    public static String GetProfileName(int index)
    {
       try
@@ -131,6 +155,7 @@ public class CustomData
       } catch (Exception e) {return e.toString();}
    }
 
+   // returns the profile type at a certain index
    public static int GetProfileType(int index)
    {
       try
@@ -139,6 +164,7 @@ public class CustomData
       } catch (Exception e) {return 0;}
    }
 
+   // returns the unique profile id at a certain index
    public static long GetProfileId(int index)
    {
       try
@@ -147,6 +173,7 @@ public class CustomData
       } catch (Exception e) {return 0;}
    }
 
+   // private method to generate a new random unique id
    private static long GenerateNewId()
    {
       RefreshGameList();
@@ -174,6 +201,7 @@ public class CustomData
       return newId;
    }
 
+   // adds a profile with a specified game name and profile type
    public static boolean AddProfile(String gamename, int type)
    {
       if (gamename == null || gamename.length() == 0 || type < 0 || type >= GAMETYPE.length)
@@ -185,19 +213,20 @@ public class CustomData
          profile.put("type", type);
          profile.put("id", GenerateNewId());
          data.put(profile);
-         Toast.makeText(context, "added profile (\"" + gamename + "\" + \"" + type + ")",
-                        Toast.LENGTH_LONG).show();
+         /*Toast.makeText(context, "added profile (\"" + gamename + "\" + \"" + type + ")",
+                        Toast.LENGTH_LONG).show();*/
          RefreshGameList();
          return true;
       }
       catch (Exception e)
       {
-         Toast.makeText(context, "failed add profile (\"" + gamename + "\" + \"" + type + ")",
-                        Toast.LENGTH_LONG).show();
+         /*Toast.makeText(context, "failed add profile (\"" + gamename + "\" + \"" + type + ")",
+                        Toast.LENGTH_LONG).show();*/
          return false;
       }
    }
 
+   // removes a profile at a specified index
    public static boolean RemoveProfile(int index)
    {
       if (index < 0 || index >= GetNumProfiles())
@@ -214,12 +243,14 @@ public class CustomData
       return true;
    }
 
+   // removes all profiles
    public static void RemoveAll()
    {
       data = new JSONArray();
       gameList = new ArrayList<GameListEntry>();
    }
 
+   // returns the index of a the profile for a unique id
    public static int GetProfileIndex(long id)
    {
       int index = -1;
@@ -235,18 +266,24 @@ public class CustomData
       return index;
    }
 
+   // sets the active profile, called from GSCustom before invoking any of the Game Profile
+   //    activities, lets specific game profile subclasses know where in the array to read/write
+   //    out their data to
    public static void SetActiveProfile(int index)
    {
       pi = index;
    }
 
+   // returns the index of the active profile
    public static int ActiveProfile()
    {
       return pi;
    }
 
+   // manages all data for sports game profiles
    static class Sports
    {
+      // used for convenience, java repreentation of data in an ArrayList<Game> games
       static class Game
       {
          int month, day, year, yourScore, opponentScore;
@@ -255,6 +292,8 @@ public class CustomData
 
       private static ArrayList<Game> games = null;
 
+      // extracts the data from the JSONObject in the JSONArray CustomData.data at the active
+      //    profile index and stores it in a more familiar java representation
       public static boolean LoadInit()
       {
          games = new ArrayList<Game>();
@@ -263,7 +302,7 @@ public class CustomData
          {
             if (data.getJSONObject(pi).getInt("type") != CustomData.SPORTS)
             {
-               Toast.makeText(context, "not a sports profile", Toast.LENGTH_SHORT).show();
+               Toast.makeText(context, "error: not a sports profile", Toast.LENGTH_SHORT).show();
                return false;
             }
             JSONArray jGames = new JSONArray(data.getJSONObject(pi).getString("games"));
@@ -284,13 +323,15 @@ public class CustomData
          catch (Exception e)
          {
             e.printStackTrace();
-            Toast.makeText(GSCustom.instance, "error loading sports profiles:\n" + e.toString(),
-                           Toast.LENGTH_LONG).show();
+            /*Toast.makeText(GSCustom.instance, "error loading sports profiles:\n" + e.toString(),
+                           Toast.LENGTH_LONG).show();*/
          }
 
          return true;
       }
 
+      // writes the ArrayList<Game> back a JSONObject in the JSONArray CustomData.data at the
+      //    specified active profile index
       public static int UpdateUnload()
       {
          int resCount = 0;
@@ -315,8 +356,8 @@ public class CustomData
          } catch (Exception e)
          {
             Toast.makeText(
-                  context, "failed to save profile data\n" + e.toString(),
-                  Toast.LENGTH_LONG
+                  context, "failed to save sports profile data\n" + e.toString(),
+                  Toast.LENGTH_SHORT
             ).show();
             resCount = -1;
          }
@@ -325,6 +366,8 @@ public class CustomData
          return resCount;
       }
 
+      // adds a game specifying a date, your team name, your score, opponent team name, and
+      //    opponent score
       static void AddGame(int m, int d, int y, String you, String they, int youScore, int theyScore)
       {
          Game g = new Game();
@@ -334,6 +377,7 @@ public class CustomData
          games.add(g);
       }
 
+      // gets all unique teams, used with AutoCompleteTextView
       public static String[] GetAllTeams()
       {
          ArrayList<String> teamsAll = new ArrayList<String>();
@@ -348,6 +392,7 @@ public class CustomData
          return teamsAll.toArray(teamsArray);
       }
 
+      // gets all unique teams you have played
       public static String[] GetAllTeamsPlayedAs()
       {
          ArrayList<String> teamsPlayed = new ArrayList<String>();
@@ -360,6 +405,7 @@ public class CustomData
          return teamsPlayed.toArray(teamsArray);
       }
 
+      // gets all unique teams you ahve played against
       public static String[] GetAllTeamsPlayedAgainst()
       {
          ArrayList<String> teamsAgainst = new ArrayList<String>();
@@ -372,11 +418,13 @@ public class CustomData
          return teamsAgainst.toArray(teamsArray);
       }
 
+      // returns number of total games played
       public static int GetTotalGamesPlayed()
       {
          return games.size();
       }
 
+      // returns number of total wins
       public static int GetTotalWins(String yourTeam, String opponentTeam)
       {
          int wins = 0;
@@ -390,6 +438,7 @@ public class CustomData
          return wins;
       }
 
+      // returns number of total losses
       public static int GetTotalLosses(String yourTeam, String opponentTeam)
       {
          int losses = 0;
@@ -403,6 +452,7 @@ public class CustomData
          return losses;
       }
 
+      // returns number of total draws
       public static int GetTotalDraws(String yourTeam, String opponentTeam)
       {
          int draws = 0;
@@ -416,6 +466,7 @@ public class CustomData
          return draws;
       }
 
+      // returns your minimum score
       public static int GetMinScore(String yourTeam, String opponentTeam)
       {
          int minScore = Integer.MAX_VALUE;
@@ -427,6 +478,7 @@ public class CustomData
          return minScore;
       }
 
+      // returns your maximum score
       public static int GetMaxScore(String yourTeam, String opponentTeam)
       {
          int maxScore = Integer.MIN_VALUE;
@@ -438,6 +490,7 @@ public class CustomData
          return maxScore;
       }
 
+      // returns your average score
       public static double GetAveScore()
       {
          double scoreSum = 0;
@@ -446,6 +499,7 @@ public class CustomData
          return scoreSum / games.size();
       }
 
+      // returns the average opponent score
       public static double GetAveOppScore()
       {
          double scoreSum = 0;
@@ -454,16 +508,19 @@ public class CustomData
          return scoreSum / games.size();
       }
 
+      // returns the score ratio
       public static double GetScoreRatio()
       {
          return GetAveScore() / GetAveOppScore();
       }
 
+      // returns the Game ArrayList
       public static ArrayList<Game> GetGamesList()
       {
          return games;
       }
 
+      // deletes a set of indexes from ArrayList<Game>
       public static int DeleteIndexes(int[] ii)
       {
          ArrayList<Game> newGames = new ArrayList<Game>();
@@ -484,12 +541,15 @@ public class CustomData
          return numRemoved;
       }
 
+      // deletes a single index from ArrayList<Game>
       static void DeleteIndex(int index)
       {
          DeleteIndexes(new int[]{index});
       }
    }
 
+   // manages data for rpg game profiles, similar setup
+   // stores an activeQuest index which it uses to manipulate data
    static class Rpg
    {
       static class Quest
@@ -500,7 +560,9 @@ public class CustomData
       }
 
       static ArrayList<Quest> quests;
+      private static int activeQuest = -1;
 
+      // extract data from JSONOBject
       public static boolean LoadInit()
       {
          quests = new ArrayList<Quest>();
@@ -509,7 +571,7 @@ public class CustomData
          {
             if (data.getJSONObject(pi).getInt("type") != CustomData.RPG)
             {
-               Toast.makeText(context, "not an rpg profile", Toast.LENGTH_SHORT).show();
+               Toast.makeText(context, "error: not an rpg profile", Toast.LENGTH_SHORT).show();
                return false;
             }
             JSONArray jQuests = new JSONArray(data.getJSONObject(pi).getString("quests"));
@@ -522,17 +584,19 @@ public class CustomData
                q.complete = jGame.getBoolean("complete");
                quests.add(q);
             }
+            activeQuest = data.getJSONObject(pi).getInt("activequest");
          }
          catch (Exception e)
          {
             e.printStackTrace();
-            Toast.makeText(GSCustom.instance, "error loading rpg profiles:\n" + e.toString(),
-                           Toast.LENGTH_LONG).show();
+            /*Toast.makeText(GSCustom.instance, "error loading rpg profiles:\n" + e.toString(),
+                           Toast.LENGTH_LONG).show();*/
          }
 
          return true;
       }
 
+      // write data back to JSONObject
       public static int UpdateUnload()
       {
          int resCount = 0;
@@ -549,20 +613,23 @@ public class CustomData
                jQuests.put(jQuest);
             }
             data.getJSONObject(pi).put("quests", jQuests);
+            data.getJSONObject(pi).put("activequest", activeQuest);
             resCount = quests.size();
          } catch (Exception e)
          {
             Toast.makeText(
-                  context, "failed to save profile data\n" + e.toString(),
-                  Toast.LENGTH_LONG
+                  context, "failed to save rpg profile data\n" + e.toString(),
+                  Toast.LENGTH_SHORT
             ).show();
             resCount = -1;
          }
          quests = null;
+         activeQuest = -1;
 
          return resCount;
       }
 
+      // add a quest with a specified name
       public static boolean AddQuest(String qName)
       {
          if (GetQuest(qName) != null)
@@ -575,11 +642,13 @@ public class CustomData
          return true;
       }
 
+      // returns the number of total quests
       public static int GetNumQuests()
       {
          return quests.size();
       }
 
+      // returns the number of quests marked as complete
       public static int GetNumCompleteQuests()
       {
          int compCount = 0;
@@ -589,17 +658,44 @@ public class CustomData
          return compCount;
       }
 
+      // gets the quest object by a specified quest name
       public static Quest GetQuest(String qName)
       {
-         for (Quest q : quests)
-            if (q.name.compareToIgnoreCase(qName) == 0)
-               return q;
+         if (qName != null && qName.length() != 0)
+            for (Quest q : quests)
+               if (q.name.compareToIgnoreCase(qName) == 0)
+                  return q;
          return null;
       }
 
+      // gets the index of a quest object of a specified quest name
+      public static int GetQuestIndex(String qName)
+      {
+         if (qName != null && qName.length() != 0)
+            for (int i = 0; i < quests.size(); i++)
+               if (quests.get(i).name.compareToIgnoreCase(qName) == 0)
+                  return i;
+         return -1;
+      }
+
+      // sets the activeQuest to the index of the quest object with the specified quest name
+      public static void SetActiveQuest(String qName)
+      {
+         activeQuest = GetQuestIndex(qName);
+      }
+
+      // returns the activeQuest index value
+      public static int GetActiveQuest()
+      {
+         return activeQuest;
+      }
+
+      // removes a quest object by a specified name
       public static boolean RemoveQuest(String qName)
       {
          boolean removed = false;
+         if (GetQuestIndex(qName) == activeQuest)
+            activeQuest = -1;
          for (int i = 0; i < quests.size();)
             if (quests.get(i).name.compareToIgnoreCase(qName) == 0)
             {
@@ -611,19 +707,126 @@ public class CustomData
          return removed;
       }
 
-      public static void MarkQuestComplete(String qName, boolean isComplete)
+      // removes a quest at a specified index
+      public static boolean RemoveQuest(int index)
       {
-         Quest q;
-         if ((q = GetQuest(qName)) != null)
-            q.complete = isComplete;
+         if (index < 0 || index >= quests.size())
+            return false;
+         if (activeQuest == index)
+            activeQuest = -1;
+         quests.remove(index);
+         return true;
       }
 
+      // removes the quest at the activeQuest index
+      public static boolean RemoveActiveQuest()
+      {
+         return RemoveQuest(activeQuest);
+      }
+
+      // gets all quest names (for use with AutoCompleteTextView)
       public static String[] GetAllQuestNames()
       {
          String[] qNames = new String[GetNumQuests()];
          for (int i = 0; i < GetNumQuests(); i++)
             qNames [i] = quests.get(i).name;
          return qNames;
+      }
+
+      // gets the name of the quest at the activeQuest index
+      public static String GetName()
+      {
+         if (activeQuest >= 0 && activeQuest < quests.size())
+            return quests.get(activeQuest).name;
+         return null;
+      }
+
+      // gets the quest note at the activeQuest index
+      public static String GetNote()
+      {
+         if (activeQuest >= 0 && activeQuest < quests.size())
+            return quests.get(activeQuest).note;
+         return null;
+      }
+
+      // returns whether the quest at the activeQuest index was marked as complete
+      public static boolean GetComplete()
+      {
+         if (activeQuest >= 0 && activeQuest < quests.size())
+            return quests.get(activeQuest).complete;
+         return false;
+      }
+
+      // sets the note at the activeQuest index
+      public static void SetNote(String note)
+      {
+         if (activeQuest >= 0 && activeQuest < quests.size())
+            quests.get(activeQuest).note = note;
+      }
+
+      // marks the quest at the activeQuest index as isComplete
+      public static void SetComplete(boolean isComplete)
+      {
+         if (activeQuest >= 0 && activeQuest < quests.size())
+            quests.get(activeQuest).complete = isComplete;
+      }
+   }
+
+   // class for managing shooter profile data
+   static class Shooter
+   {
+      static String playerName = null;
+      static String weapon = null;
+      static int numKills = 0;
+      static int numDeaths = 0;
+
+      // extract from JSONObject
+      public static boolean LoadInit()
+      {
+         try
+         {
+            playerName = data.getJSONObject(pi).getString("playername");
+            weapon = data.getJSONObject(pi).getString("weapon");
+            numKills = data.getJSONObject(pi).getInt("numkills");
+            numDeaths = data.getJSONObject(pi).getInt("numdeaths");
+         }
+         catch (Exception e)
+         {
+            e.printStackTrace();
+            /*Toast.makeText(GSCustom.instance, "error loading shooter profile:\n" + e.toString(),
+                           Toast.LENGTH_SHORT).show();*/
+         }
+
+         return true;
+      }
+
+      // write back to JSONObject
+      public static boolean UpdateUnload()
+      {
+         try
+         {
+            if (playerName == null)
+               playerName = "";
+            if (weapon == null)
+               weapon = "";
+            data.getJSONObject(pi).put("playername", playerName);
+            data.getJSONObject(pi).put("weapon", weapon);
+            data.getJSONObject(pi).put("numkills", numKills);
+            data.getJSONObject(pi).put("numdeaths", numDeaths);
+         } catch (Exception e)
+         {
+            Toast.makeText(
+                  context, "failed to save shooter profile data\n" + e.toString(),
+                  Toast.LENGTH_SHORT
+            ).show();
+            return false;
+         }
+         playerName = null;
+         weapon = null;
+         numKills = 0;
+         numDeaths = 0;
+
+         return true;
       }
    }
 }

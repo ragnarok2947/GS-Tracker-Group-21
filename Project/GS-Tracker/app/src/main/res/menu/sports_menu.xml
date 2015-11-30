@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="lee.gs_tracker.gsCustom.Sports">
+      tools:context="cop4331c.gscustom.Sports">
 <!--   <item
       android:id="@+id/sports_action_goto_container"
       android:orderInCategory="100"

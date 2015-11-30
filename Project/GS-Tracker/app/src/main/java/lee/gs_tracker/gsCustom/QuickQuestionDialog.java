@@ -18,6 +18,14 @@ import java.util.Random;
 
 /**
  * Created by Joe Paul on 11/25/2015.
+ *
+ * creates an AlertDialog from a title string and a message string or custom view and randomizes
+ *    all the background and text colors / text sizes of every nested viewgroup and textview
+ *    in the dialog
+ * designed so that it can be invoked in a single line and has its own listener
+ *    (QuickQuestionDialog.Listener)
+ *
+ * see comments for Init() and Listener at bottom for detailed usage
  */
 public class QuickQuestionDialog implements DialogInterface.OnClickListener
 {
@@ -37,6 +45,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
    private int response = 0;
    private ArrayList<Listener> listeners = null;
 
+   // randomizes the colors / text sizes of a view and all its descendents
    private View RandomizeViewColors(View v)
    {
       int c = GenerateRandomColor();
@@ -52,10 +61,37 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       return v;
    }
 
+   /*
+   * private method to initialize data, called by all constructors
+   * arguments:
+   *     context:       passes the context from the calling activity
+   *     name:          designates a name for this quickquestion dialog that is passed to the
+   *                       listener
+   *     listener:      a class that implements QuickQuestionDialog.Listener that is called when
+   *                       the user clicks a button
+   *     message:       the message to display in the body of the dialog
+   *     contentview:   a custom view that can be used to create the content of the dialog
+   *     title:         the title for the dialog, can be null
+   *     messageImageIndex:   not used
+   *     buttonTexts:   the texts to be displayed on the buttons, can be null and default button
+   *                       texts will be used
+   *     buttonValues:  must be specified; the values of the buttons, only negative, zero, and
+   *                       positive ranges are significant (negative = no, zero = ok,
+   *                       positive = yes) only buttonValues needs to be specified and buttonTexts
+   *                       and buttonTags can be null
+   *     buttonTags:    an object to be passed to the listener corresponding to each button, can
+   *                       be null
+   *
+   *     only a context and buttonValues really need to be specified
+   *
+   *     can pass an array to it as an argument by writing Init(..., new int[]{-1, 1}, ...)
+   *        for example, so can be used in a single line
+   */
    private void Init(Context context, String name, Listener listener, String message,
                      View contentView, String title, int messageImageIndex, String[] buttonTexts,
                      int[] buttonValues, Object[] buttonTags)
    {
+      // initialize data
       this.context = context;
       this.name = name;
       this.buttonTags = new HashMap<Integer, Object>();
@@ -63,11 +99,14 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       if (listener != null)
          listeners.add(listener);
 
+      // create alertdialog builder
       AlertDialog.Builder b = new AlertDialog.Builder(context);
       int c;
 
+      // if title is not null, add to alert dialog
       if (title != null && title.length() > 0)
       {
+         // linear layout for title
          LinearLayout titleLayout = new LinearLayout(context);
          titleLayout.setLayoutParams
                (
@@ -80,6 +119,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
          titleLayout.setBackgroundColor(c = GenerateRandomColor());
          titleLayout.setOrientation(LinearLayout.VERTICAL);
 
+         // textview for title text
          TextView titleView = new TextView(context);
          titleView.setLayoutParams
                (
@@ -94,6 +134,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
          titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20 + rnd.nextInt(11));
          titleView.setText(title);
 
+         // a divider to between title and content in dialog
          ImageView divider = new ImageView(context);
          divider.setLayoutParams
                (
@@ -107,18 +148,22 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
          divider.setScaleType(ImageView.ScaleType.FIT_XY);
          divider.setPadding(0, Dp(5), 0, Dp(5));
 
+         // set title view in dialog
          titleLayout.addView(titleView);
          titleLayout.addView(divider);
-
          b.setCustomTitle(titleLayout);
       }
+      // passing init a custom view takes precedence over a string message
       if (contentView != null)
       {
+         // randomize colors in the custom view
          b.setView(RandomizeViewColors(contentView));
+
+         // if a custom view is specified, the view is passed back to the listener as the tag
          for (int i = -1; i <= 1; i++)
             this.buttonTags.put(i, contentView);
       }
-      else if (message != null)
+      else if (message != null) // user specifies a string message, randomize and set view
       {
          TextView textView = new TextView(context);
          textView.setLayoutParams
@@ -140,6 +185,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
          b.setView(textView);
       }
 
+      // add buttons to dialog as specified, strings, values, and object tags
       for (int i = 0; i < buttonValues.length; i++)
       {
          String text = null;
@@ -164,9 +210,12 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
             );
       }
 
+      // create and show dialog
       AlertDialog d = b.create();
       d.show();
 
+      // randomize button colors, needs to be done after dialog is shown otherwise
+      //    d.getButton will return null
       for (int i = 0; i < 3; i++)
       {
          Button bu;
@@ -181,6 +230,9 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       }
    }
 
+   // CONSTRUCTORS:
+
+   // specifies a context, name, listener, message, title, button texts, values, and tags
    public QuickQuestionDialog(Context c, String name, Listener l,
                               String message, String title, String[] buttonTexts,
                               int[] buttonValues, Object[] buttonTags)
@@ -188,30 +240,40 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       Init(c, name, l, message, null, title, -1, buttonTexts, buttonValues, buttonTags);
    }
 
+   // does not specify button tags
    public QuickQuestionDialog(Context c, String name, Listener l, String message,
                               String title, String[] buttonTexts, int[] buttonValues)
    {
       Init(c, name, l, message, null, title, -1, buttonTexts, buttonValues, null);
    }
 
+   // specifies a custom view instead of a message, view is automatically the tag sent to the
+   //    listener
    public QuickQuestionDialog(Context c, String name, Listener l, View contentView,
                               String title, String[] buttonTexts, int[] buttonValues)
    {
       Init(c, name, l, null, contentView, title, -1, buttonTexts, buttonValues, null);
    }
 
+   // does not specify button texts, default texts are used depending on the range of each
+   //    button value in the buttonValues array (1 = "yes", 0 = "ok", -1 = "no");
+   //    can pass an array to the constructor as new int[]{-1, 0} for ("no", "yes")
    public QuickQuestionDialog(Context c, String name, Listener l, String message,
                               String title, int[] buttonValues)
    {
       Init(c, name, l, message, null, title, -1, null, buttonValues, null);
    }
 
+   // specifies a custom view instead of a message; name, listener, contentview (or message in
+   //    constructor above), and title can all be null and will still work but quite pointless
    public QuickQuestionDialog(Context c, String name, Listener l, View contentView,
                               String title, int[] buttonValues)
    {
       Init(c, name, l, null, contentView, title, -1, null, buttonValues, null);
    }
 
+   // adds additional listeners; can still be used in a single line as:
+   //    new QuickQuestionDialog(...).AddListeners(...)
    public void AddListeners(Iterable<Listener> z)
    {
       for (Listener i : z)
@@ -219,6 +281,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
                listeners.add(i);
    }
 
+   // private method to generate a random color
    private int GenerateRandomColor()
    {
       if (rnd == null)
@@ -230,11 +293,14 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       return Color.parseColor(colorString);
    }
 
+   // private method to invert a color
    private int InvertColor(int c)
    {
       return Color.rgb(255 - Color.red(c), 255 - Color.green(c), 255 - Color.blue(c));
    }
 
+   // converts pixels to android device-independent pixels, method body is brief but Dp is much
+   //    easier to remember
    private int Dp(int px)
    {
       return (int) TypedValue.applyDimension(
@@ -242,6 +308,7 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
             context.getResources().getDisplayMetrics());
    }
 
+   // user selects a button; send response to all listeners
    @Override
    public void onClick(DialogInterface dialog, int which)
    {
@@ -256,6 +323,11 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
          l.onQuickQuestionDialogClick(name, response, buttonTags.get(response));
    }
 
+   // QuickQuestionDialog.Listener interface, method onQuickQuestionDialogClick will be called
+   //    for each listener specified when creating the QuickQuestionDialog
+   // will send the listener the name of the dialog, the response, (yes = 1, no = -1, ok = 0)
+   //    and the tag (user specified for a message or the constent view if a custom view is
+   //    specified)
    interface Listener
    {
       void onQuickQuestionDialogClick(String name, int response, Object tag);

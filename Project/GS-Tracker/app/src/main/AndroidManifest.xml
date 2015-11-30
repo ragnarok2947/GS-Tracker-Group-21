@@ -138,7 +138,7 @@
         <activity
             android:name=".gsCustom.Shooter"
             android:parentActivityName=".gsCustom.GSCustom"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".gsCustom.GSCustom"/>
