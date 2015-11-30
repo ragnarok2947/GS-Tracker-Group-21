@@ -6,10 +6,13 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by Joe Paul on 11/24/2015.
@@ -64,7 +67,7 @@ public class CustomData
       data = new JSONArray();
    }
 
-   // read data from disk to the JSONArray data
+   // read compressed data from disk to JSONArray data
    public static boolean ReadDataInit()
    {
       if (data == null)
@@ -72,10 +75,20 @@ public class CustomData
          try
          {
             FileInputStream fis = context.openFileInput("customdata");
-            byte[] byteData = new byte[(int) fis.getChannel().size()];
-            fis.read(byteData);
-            data = new JSONArray(new String(byteData));
-            fis.close();
+            GZIPInputStream gis = new GZIPInputStream(fis);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[4096];
+            int i, n;
+            while ((n = gis.read(buf, 0, 4096)) != -1)
+               bos.write(buf, 0, n);
+            gis.close();
+            fis  = null; // attempt at memory efficiency
+            gis = null;
+            buf = bos.toByteArray();
+            String str = new String(buf);
+            buf = null;
+            data = new JSONArray(str);
+            str = null;
             /*Toast.makeText(context, "loaded " + (data.length()) + " profiles", Toast.LENGTH_SHORT)
                   .show();*/
          } catch (Exception e)
@@ -95,15 +108,18 @@ public class CustomData
       return true;
    }
 
-   // write JSONArray data out to disk
+   // write JSONArray data out to compressed text file on disk
    public static boolean WriteData()
    {
       try
       {
          FileOutputStream fos = context.openFileOutput("customdata",
                                 Context.MODE_PRIVATE);
-         fos.write(data.toString().getBytes());
-         fos.close();
+         GZIPOutputStream gos = new GZIPOutputStream(fos);
+         byte[] bytes = data.toString().getBytes();
+         for (int i = 0; bytes.length - i > 0; i += 4096)
+            gos.write(bytes, i, bytes.length < 4096 ? bytes.length - i : 4096);
+         gos.close();
          /*Toast.makeText(context, "written " + data.length() + " profiles", Toast.LENGTH_SHORT)
                .show();*/
       }
