@@ -1,10 +1,13 @@
 package lee.gs_tracker.WoW;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -13,9 +16,11 @@ import android.widget.TextView;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.File;
 import java.util.concurrent.Semaphore;
 
 import lee.gs_tracker.DownloadImageTask;
+import lee.gs_tracker.MainActivity;
 import lee.gs_tracker.R;
 
 public class WoWPaladin extends AppCompatActivity {
@@ -76,6 +81,56 @@ public class WoWPaladin extends AppCompatActivity {
         //continue here
 
 
+    }
+
+    public void deleteTemplate(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Saved User?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                file.delete();
+                Intent intent = new Intent(WoWPaladin.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void resetTemplate(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Reset Saved User?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                file.delete();
+                Intent intent = new Intent(WoWPaladin.this, WoWCredentials.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
