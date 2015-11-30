@@ -109,7 +109,7 @@ public class WoWAPIUser {
 
     }
 
-    public static String getEnergy(org.json.simple.JSONObject userStats){
+    public static String getClassPower(org.json.simple.JSONObject userStats){
         try{
             org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
             return stats.get("power").toString();
@@ -119,6 +119,7 @@ public class WoWAPIUser {
         }
 
     }
+
 
     public static String getDPS(org.json.simple.JSONObject userStats){
         try{
@@ -130,6 +131,73 @@ public class WoWAPIUser {
         }
 
     }
+
+    public static String getArmor(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("armor").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+
+    public static String getRangedAP(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("rangedAttackPower").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+
+    public static String getSpellPower(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("spellPower").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+    public static String getBlock(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("block").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+
+    public static String getHealingBonus(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("versatilityHealingDoneBonus").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+
+    public static String getSpellCrit(org.json.simple.JSONObject userStats){
+        try{
+            org.json.simple.JSONObject stats = (org.json.simple.JSONObject)userStats.get("stats");
+            return stats.get("spellCrit").toString();
+        }
+        catch(Exception E){
+            return "ERROR";
+        }
+
+    }
+
+
 
     public static String getStrength(org.json.simple.JSONObject userStats){
         try{

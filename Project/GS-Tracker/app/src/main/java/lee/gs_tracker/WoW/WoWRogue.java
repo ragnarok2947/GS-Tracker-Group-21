@@ -65,7 +65,7 @@ public class WoWRogue extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.levelEdit)).setText(WoWAPIUser.getLevel(User));
         ((TextView)findViewById(R.id.healthEdit)).setText(WoWAPIUser.getHealth(userStats));
-        ((TextView)findViewById(R.id.energyEdit)).setText(WoWAPIUser.getEnergy(userStats));
+        ((TextView)findViewById(R.id.energyEdit)).setText(WoWAPIUser.getClassPower(userStats));
         ((TextView)findViewById(R.id.dpsEdit)).setText(WoWAPIUser.getDPS(userStats));
         ((TextView)findViewById(R.id.strengthEdit)).setText(WoWAPIUser.getStrength(userStats));
         ((TextView)findViewById(R.id.agilityEdit)).setText(WoWAPIUser.getAgility(userStats));

@@ -71,8 +71,8 @@ public class WoWHunter extends AppCompatActivity{
         ((TextView)findViewById(R.id.agilityEdit)).setText(WoWAPIUser.getAgility(userStats));
         ((TextView)findViewById(R.id.intellectEdit)).setText(WoWAPIUser.getIntellect(userStats));
         ((TextView)findViewById(R.id.staminaEdit)).setText(WoWAPIUser.getStamina(userStats));
-        ((TextView)findViewById(R.id.energyEdit)).setText(WoWAPIUser.getEnergy(userStats)); //change
-        ((TextView)findViewById(R.id.dpsEdit)).setText(WoWAPIUser.getDPS(userStats)); //change
+        ((TextView)findViewById(R.id.manaEdit)).setText(WoWAPIUser.getClassPower(userStats)); //change
+        ((TextView)findViewById(R.id.rangedAPEdit)).setText(WoWAPIUser.getRangedAP(userStats)); //change
         ((TextView)findViewById(R.id.specEdit)).setText(WoWAPIUser.getSpec(User));
 
         Spinner dropdown = (Spinner)findViewById(R.id.armorList);

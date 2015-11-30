@@ -124,14 +124,29 @@ public class WoWCredentials extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, Obj.toString());
                 startActivity(intent);
             } else if (Class.equals("Warrior")) {
+                Intent intent = new Intent(this, WoWWarrior.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
             } else if (Class.equals("Mage")) {
+                Intent intent = new Intent(this, WoWMage.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
             } else if (Class.equals("Shaman")) {
+                Intent intent = new Intent(this, WoWShaman.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
             } else if (Class.equals("Warlock")) {
+                Intent intent = new Intent(this, WoWWarlock.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
             } else if (Class.equals("Druid")) {
+                Intent intent = new Intent(this, WoWDruid.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
             } else {
                 //write alert that says class currently isn't supported
@@ -169,9 +184,14 @@ public class WoWCredentials extends AppCompatActivity {
             return intent;
         }
         else if(Class.equals("Warrior")){
-
+            Intent intent = new Intent(context, WoWWarrior.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
         }
         else if(Class.equals("Mage")){
+            Intent intent = new Intent(context, WoWMage.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
 
         }
         else if(Class.equals("Paladin")){
@@ -180,12 +200,21 @@ public class WoWCredentials extends AppCompatActivity {
             return intent;
         }
         else if(Class.equals("Warlock")){
+            Intent intent = new Intent(context, WoWWarlock.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
 
         }
         else if(Class.equals("Shaman")){
+            Intent intent = new Intent(context, WoWShaman.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
 
         }
         else if(Class.equals("Druid")){
+            Intent intent = new Intent(context, WoWDruid.class);
+            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+            return intent;
 
         }
 

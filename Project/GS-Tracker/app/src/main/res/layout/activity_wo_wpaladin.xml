@@ -184,20 +184,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="DPS"
-        android:id="@+id/dpsText"
+        android:text="Armor"
+        android:id="@+id/rangedAPText"
         android:layout_alignTop="@+id/agilityEdit"
-        android:layout_alignLeft="@+id/energyText"
-        android:layout_alignStart="@+id/energyText" />
+        android:layout_alignLeft="@+id/manaText"
+        android:layout_alignStart="@+id/manaText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/dpsEdit"
-        android:layout_alignBaseline="@+id/dpsText"
-        android:layout_alignBottom="@+id/dpsText"
+        android:id="@+id/armorRatingEdit"
+        android:layout_alignBaseline="@+id/rangedAPText"
+        android:layout_alignBottom="@+id/rangedAPText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -205,8 +205,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Energy"
-        android:id="@+id/energyText"
+        android:text="Mana"
+        android:id="@+id/manaText"
         android:layout_alignTop="@+id/intellectEdit"
         android:layout_toRightOf="@+id/serverText"
         android:layout_toEndOf="@+id/serverText" />
@@ -216,8 +216,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/energyEdit"
-        android:layout_alignTop="@+id/energyText"
+        android:id="@+id/manaEdit"
+        android:layout_alignTop="@+id/manaText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -237,11 +237,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Armor"
+        android:text="Equipped"
         android:id="@+id/armorText"
         android:layout_above="@+id/armorList"
-        android:layout_alignRight="@+id/healthText"
-        android:layout_alignEnd="@+id/healthText" />
+        android:layout_toStartOf="@+id/staminaEdit"
+        android:layout_alignRight="@+id/resetButton"
+        android:layout_alignEnd="@+id/resetButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -250,8 +251,8 @@
         android:text="Talents"
         android:id="@+id/talentText"
         android:layout_alignTop="@+id/staminaEdit"
-        android:layout_toRightOf="@+id/dpsText"
-        android:layout_toEndOf="@+id/dpsText" />
+        android:layout_toRightOf="@+id/rangedAPText"
+        android:layout_toEndOf="@+id/rangedAPText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -270,8 +271,8 @@
         android:text="Abilities"
         android:id="@+id/abilitiesText"
         android:layout_alignTop="@+id/armorText"
-        android:layout_alignLeft="@+id/talentList"
-        android:layout_alignStart="@+id/talentList" />
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
 
     <Spinner
         android:layout_width="wrap_content"

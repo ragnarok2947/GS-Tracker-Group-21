@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 }
                 catch(Exception E){
+                    file.delete(); //bad user
                     E.printStackTrace();
                 }
 
