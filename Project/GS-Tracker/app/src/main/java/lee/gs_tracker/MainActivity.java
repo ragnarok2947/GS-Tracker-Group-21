@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements
             if(file.exists()){       //if a WoW is is already in, grab it
                 //getBaseContext().getFileStreamPath(fname);
                 //Object data = new InternalData().getFileContents("WoWUser.txt");
+                //file.delete();
                 try {
                     String data = new Scanner(file).next();
                     JSONObject User = (JSONObject)JSONValue.parse(data);

@@ -15,7 +15,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import lee.gs_tracker.R;
-
+import lee.gs_tracker.gsCustom.QuickQuestionDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 public class WoWCredentials extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "WoWRogue";
 
@@ -90,50 +92,70 @@ public class WoWCredentials extends AppCompatActivity {
 
 
     public void goToTemplate(View view){
-        sendCharData();
         String InputURL = "https://us.api.battle.net/wow/character/" + getServerName() + "/" + getCharName() + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
-       org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
-        String Class = WoWAPIUser.getCharClass(Obj);
-        if(Class.equals("Rogue")){
-            Intent intent = new Intent(this, WoWRogue.class);
-            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
-            startActivity(intent);
-        }
-        else if(Class.equals("Hunter")){
-            Intent intent = new Intent(this, WoWHunter.class);
-            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
-            startActivity(intent);
+        org.json.JSONObject Obj = null;
+
+            Obj = WoWAPIUser.sentGet(InputURL);
+
+
+        if(Obj == null){
+            //invalid credentials --
+
+           /* new QuickQuestionDialog(this, null, null, "Please input valid credentials for your WoW Character", "Error",
+                    new int[]{0});*/
+            errorOnUser(view);
+
 
         }
-        else if(Class.equals("Paladin")){
-            Intent intent = new Intent(this, WoWPaladin.class);
-            intent.putExtra(EXTRA_MESSAGE, Obj.toString());
-            startActivity(intent);
-        }
-        else if(Class.equals("Warrior")){
+        else {
+            sendCharData();
+            String Class = WoWAPIUser.getCharClass(Obj);
+            if (Class.equals("Rogue")) {
+                Intent intent = new Intent(this, WoWRogue.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
+            } else if (Class.equals("Hunter")) {
+                Intent intent = new Intent(this, WoWHunter.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
 
-        }
-        else if(Class.equals("Mage")){
+            } else if (Class.equals("Paladin")) {
+                Intent intent = new Intent(this, WoWPaladin.class);
+                intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+                startActivity(intent);
+            } else if (Class.equals("Warrior")) {
 
-        }
-        else if(Class.equals("Shaman")){
+            } else if (Class.equals("Mage")) {
 
-        }
-        else if(Class.equals("Warlock")){
+            } else if (Class.equals("Shaman")) {
 
-        }
-        else if(Class.equals("Druid")){
+            } else if (Class.equals("Warlock")) {
 
-        }
+            } else if (Class.equals("Druid")) {
 
-        else{
-            //write alert that says class currently isn't supported
+            } else {
+                //write alert that says class currently isn't supported
+            }
         }
+    }
+    public void errorOnUser(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error: Please input valid credentials");
 
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
     public Intent goToTemplate(Context context, String ServerName, String CharName){
         String InputURL = "https://us.api.battle.net/wow/character/" + ServerName + "/" + CharName + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
+
         String Class = WoWAPIUser.getCharClass(Obj);
         if(Class.equals("Rogue")){
             Intent intent = new Intent(context, WoWRogue.class);
@@ -168,6 +190,8 @@ public class WoWCredentials extends AppCompatActivity {
         }
 
         else{
+            new QuickQuestionDialog(this, null, null, "Class is currently not supported", "Error",
+                    new int[]{0});
             //put in alert message that says that the class is not supported
         }
 
