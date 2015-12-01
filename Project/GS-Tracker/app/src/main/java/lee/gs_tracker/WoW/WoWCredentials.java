@@ -105,7 +105,6 @@ public class WoWCredentials extends AppCompatActivity {
                     new int[]{0});*/
             errorOnUser(view);
 
-
         }
         else {
             sendCharData();

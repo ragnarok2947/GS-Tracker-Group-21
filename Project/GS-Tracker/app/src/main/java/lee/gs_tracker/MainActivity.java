@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 
+import lee.gs_tracker.Starcraft.StarcraftCredentials;
 import lee.gs_tracker.WoW.WoWCredentials;
 import lee.gs_tracker.gsCustom.GSCustom;
 
@@ -45,21 +46,12 @@ public class MainActivity extends AppCompatActivity implements
         Child CustomChild = new Child();
         CustomChild.ChildName = "Custom";
         CustomChild.Title = "Custom Templates";
-        Parent FPS = new Parent();
-        FPS.setTitle("FPS");
-        ArrayList<Child> FPSChildren = new ArrayList<>();
-        customChildren.add(CustomChild);
-        for (i = 0; i < 3; i++) {
-            Child FPSChild = new Child();
-            FPSChild.ChildName = "Template" + (i + 1);
-            FPSChild.Title = "Template" + (i+1);
-            FPSChildren.add(FPSChild);
-            //FPSChildren.add("Template" + (i + 1));
-        }
 
-        FPS.setArrayChildren(FPSChildren);
+
+        customChildren.add(CustomChild);
+
         Custom.setArrayChildren(customChildren);
-        arrayParents.add(FPS);
+
         arrayParents.add(Custom);
 
         //here we set the parents and the children
@@ -126,6 +118,10 @@ public class MainActivity extends AppCompatActivity implements
                 //createFile("WoWUser.txt");
             }
 
+        }
+        else if(TagName == "StarcraftII"){
+            Intent intent = new Intent(this, StarcraftCredentials.class);
+            startActivity(intent);
         }
         else if(TagName == "Custom"){
             Intent intent = new Intent(this, GSCustom.class);
