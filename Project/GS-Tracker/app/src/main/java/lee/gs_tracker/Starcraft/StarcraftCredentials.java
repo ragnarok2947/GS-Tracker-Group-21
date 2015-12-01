@@ -77,7 +77,7 @@ public class StarcraftCredentials extends AppCompatActivity {
         return file;
     }
 
-    public void sendCharData(){
+    public void sendUserData(){
         JSONObject User = new JSONObject();
         User.put("ProfileName", getProfileName());
         User.put("ID", getID());
@@ -104,10 +104,20 @@ public class StarcraftCredentials extends AppCompatActivity {
         }
 
         else{ //found user
+            sendUserData();
             Intent intent = new Intent(this, StarcraftUser.class);
             intent.putExtra(EXTRA_MESSAGE, Obj.toString());
             startActivity(intent);
         }
+    }
+
+    public Intent goToTemplate(Context context, String ID, String ProfileName){
+        String InputURL = "https://us.api.battle.net/sc2/profile/" + ID + "/1/" + ProfileName + "/?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
+        org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
+
+        Intent intent = new Intent(context, StarcraftUser.class);
+        intent.putExtra(EXTRA_MESSAGE, Obj.toString());
+        return intent;
     }
 
     public void errorOnUser(View view){

@@ -54,21 +54,6 @@ public class MainActivity extends AppCompatActivity implements
 
         arrayParents.add(Custom);
 
-        //here we set the parents and the children
-        /*for (int i = 0; i < 10; i++){
-            //for each "i" create a new Parent object to set the title and the children
-            Parent parent = new Parent();
-            parent.setTitle("Parent " + i);
-
-            arrayChildren = new ArrayList<String>();
-            for (int j = 0; j < 10; j++) {
-                arrayChildren.add("Child " + j);
-            }
-            parent.setArrayChildren(arrayChildren);
-
-            //in this array we add the Parent object. We will use the arrayParents at the setAdapter
-            arrayParents.add(parent);
-        }*/
 
         //sets the adapter that provides data to the list.
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
@@ -97,9 +82,7 @@ public class MainActivity extends AppCompatActivity implements
         if(TagName == "WoW") {
             File file = getBaseContext().getFileStreamPath("WoWUser.txt");
             if(file.exists()){       //if a WoW is is already in, grab it
-                //getBaseContext().getFileStreamPath(fname);
-                //Object data = new InternalData().getFileContents("WoWUser.txt");
-                //file.delete();
+
                 try {
                     String data = new Scanner(file).next();
                     JSONObject User = (JSONObject)JSONValue.parse(data);
@@ -115,13 +98,27 @@ public class MainActivity extends AppCompatActivity implements
             else{
                 Intent intent = new Intent(this, WoWCredentials.class);
                 startActivity(intent);
-                //createFile("WoWUser.txt");
+
             }
 
         }
         else if(TagName == "StarcraftII"){
-            Intent intent = new Intent(this, StarcraftCredentials.class);
-            startActivity(intent);
+            File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");
+            if(file.exists()){
+                try{
+                    String data = new Scanner(file).next();
+                    JSONObject User = (JSONObject)JSONValue.parse(data);
+                    startActivity(new StarcraftCredentials().goToTemplate(this, User.get("ID").toString(), User.get("ProfileName").toString()));
+                }
+                catch(Exception E){
+                    file.delete();
+                    E.printStackTrace();
+                }
+            }
+            else {
+                Intent intent = new Intent(this, StarcraftCredentials.class);
+                startActivity(intent);
+            }
         }
         else if(TagName == "Custom"){
             Intent intent = new Intent(this, GSCustom.class);
