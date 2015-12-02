@@ -70,6 +70,19 @@ public class GSCustom extends AppCompatActivity implements QuickQuestionDialog.L
       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       toolbar.setTitle(R.string.title_gs_custom);
       setSupportActionBar(toolbar);
+      try
+      {
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+         getSupportActionBar().setBackgroundDrawable(getResources()
+                                                           .getDrawable(R.drawable.color_primary));
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+         /*Toast.makeText(this, "failed to create back button;\n" + e.toString(), Toast.LENGTH_LONG)
+               .show();*/
+      }
 
       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

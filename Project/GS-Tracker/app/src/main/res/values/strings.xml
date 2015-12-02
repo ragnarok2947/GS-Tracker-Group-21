@@ -15,8 +15,6 @@
    <string name="title_activity_sports">Sports</string>
    <string name="title_activity_notes">Rpg</string>
    <string name="title_activity_shooter">Shooter</string>
-    <string name="title_activity_starcraft_credentials">StarcraftCredentials</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_starcraft_user">StarcraftUser</string>
+    <string name="title_activity_starcraft_credentials">Starcraft Credentials</string>
+    <string name="title_activity_starcraft_user">Starcraft</string>
 </resources>
