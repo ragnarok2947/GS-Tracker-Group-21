@@ -34,23 +34,12 @@ public class Initializer {
 
 
 
-        //Games.add("World of Warcraft");
-        //Games.add("Diablo III");
-        //Games.add("Starcraft II");
-
         BlizzardGames.setArrayChildren(Games);
 
         return BlizzardGames;
     }
 
 
-
-    public static void initialize_templates(ArrayList<Parent> Parents){
-
-
-
-
-    }
 
 
 }

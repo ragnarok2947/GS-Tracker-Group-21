@@ -130,6 +130,7 @@ public class StarcraftUser extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_starcraft_user, menu);
         return true;
+
     }
 
     @Override

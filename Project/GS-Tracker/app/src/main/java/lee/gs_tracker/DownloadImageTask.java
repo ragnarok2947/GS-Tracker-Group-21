@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * Created by Lee on 11/22/2015.
  */
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {   //class for generating the image from a URL
     ImageView bmImage;
 
     public DownloadImageTask(ImageView bmImage) {
@@ -16,16 +16,16 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
+        Bitmap Image = null;
         try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
+            InputStream in = new java.net.URL(urldisplay).openStream();   //get URL and decode it
+            Image = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             e.printStackTrace();;
             //Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
-        return mIcon11;
+        return Image;
     }
 
     protected void onPostExecute(Bitmap result) {

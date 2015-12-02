@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import lee.gs_tracker.APIConnection;
 import lee.gs_tracker.R;
 import lee.gs_tracker.WoW.WoWAPIUser;
 
@@ -91,7 +92,7 @@ public class StarcraftCredentials extends AppCompatActivity {
         String InputURL = "https://us.api.battle.net/sc2/profile/" + getID() + "/1/" + getProfileName() + "/?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = null;
 
-        Obj = WoWAPIUser.sentGet(InputURL);
+        Obj = APIConnection.sentGet(InputURL);
 
 
         if (Obj == null) {
@@ -113,7 +114,7 @@ public class StarcraftCredentials extends AppCompatActivity {
 
     public Intent goToTemplate(Context context, String ID, String ProfileName){
         String InputURL = "https://us.api.battle.net/sc2/profile/" + ID + "/1/" + ProfileName + "/?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
-        org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
+        org.json.JSONObject Obj = APIConnection.sentGet(InputURL);
 
         Intent intent = new Intent(context, StarcraftUser.class);
         intent.putExtra(EXTRA_MESSAGE, Obj.toString());
