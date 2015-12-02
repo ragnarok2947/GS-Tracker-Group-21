@@ -16,10 +16,9 @@
       android:textColor="@color/colorSportsText"
       android:focusable="false"
       android:focusableInTouchMode="false"
-      android:layout_below="@+id/sports_add_title"
+      android:layout_alignParentTop="true"
       android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_marginTop="30dp"/>
+      android:layout_alignParentStart="true"/>
 
    <Button
       style="?android:attr/buttonStyleSmall"
@@ -120,7 +119,7 @@
       android:layout_height="wrap_content"
       android:text="Your Score:"
       android:id="@+id/sports_add_your_score_label"
-      android:layout_marginTop="15dp"
+      android:layout_marginTop="10dp"
       android:layout_below="@+id/sports_add_opponent_team"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
@@ -205,8 +204,9 @@
       android:id="@+id/sports_add_title"
       android:textStyle="bold"
       android:textSize="30sp"
+      android:textColor="@color/colorSportsText"
       android:layout_alignParentTop="true"
-      android:layout_centerHorizontal="true"
-      android:textColor="@color/colorSportsText"/>
+      android:layout_alignRight="@+id/sports_add_your_team"
+      android:layout_alignEnd="@+id/sports_add_your_team"/>
 
 </RelativeLayout>
