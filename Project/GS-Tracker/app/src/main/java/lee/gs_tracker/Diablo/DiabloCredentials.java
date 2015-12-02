@@ -70,7 +70,7 @@ public class DiabloCredentials extends AppCompatActivity {
     }
 
     public void errorOnUser(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);  //alerts user if entered bad credentials
         builder.setTitle("Error: Please input valid credentials");
 
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
