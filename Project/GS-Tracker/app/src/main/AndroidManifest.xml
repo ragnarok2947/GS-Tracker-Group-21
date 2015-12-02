@@ -163,6 +163,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
         </activity>
+        <activity
+            android:name=".Diablo.DiabloCredentials"
+            android:label="@string/title_activity_diablo_credentials"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Diablo.DiabloCharSelect"
+            android:label="@string/title_activity_diablo_char_select"
+            android:parentActivityName=".Diablo.DiabloCredentials" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.Diablo.DiabloCredentials" />
+        </activity>
+        <activity
+            android:name=".Diablo.DiabloStats"
+            android:label="@string/title_activity_diablo_stats"
+            android:parentActivityName=".Diablo.DiabloCredentials" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lee.gs_tracker.Diablo.DiabloCredentials" />
+        </activity>
     </application>
 
 </manifest>

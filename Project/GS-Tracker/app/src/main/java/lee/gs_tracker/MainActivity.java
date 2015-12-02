@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 
+import lee.gs_tracker.Diablo.DiabloCredentials;
 import lee.gs_tracker.Starcraft.StarcraftCredentials;
 import lee.gs_tracker.WoW.WoWCredentials;
 import lee.gs_tracker.gsCustom.GSCustom;
@@ -116,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         }
+        if(TagName == "DiabloIII"){
+            Intent intent = new Intent(this, DiabloCredentials.class);
+            startActivity(intent);
+        }
+
         else if(TagName == "Custom"){
             Intent intent = new Intent(this, GSCustom.class);
             startActivity(intent);

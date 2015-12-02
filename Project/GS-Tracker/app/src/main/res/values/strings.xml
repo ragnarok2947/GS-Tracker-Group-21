@@ -17,4 +17,7 @@
    <string name="title_activity_shooter">Shooter</string>
     <string name="title_activity_starcraft_credentials">Starcraft Credentials</string>
     <string name="title_activity_starcraft_user">Starcraft</string>
+   <string name="title_activity_diablo_credentials">DiabloCredentials</string>
+   <string name="title_activity_diablo_char_select">DiabloCharSelect</string>
+   <string name="title_activity_diablo_stats">DiabloStats</string>
 </resources>
