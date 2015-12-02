@@ -15,7 +15,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Created by Joe Paul on 11/24/2015.
+ * Created by Youssef Boules on 11/24/2015.
  *
  * manages data for all custom profiles
  * main class reads/writes data to/from disk and nested subclasses to manage data for each

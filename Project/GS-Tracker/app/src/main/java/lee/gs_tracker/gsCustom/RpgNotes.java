@@ -20,7 +20,7 @@ import android.widget.Toast;
 import lee.gs_tracker.R;
 
 /**
- * Created by Joe Paul on 11/29/2015.
+ * Created by Youssef Boules on 11/29/2015.
  *
  * manages and displays an rpg profile
  *

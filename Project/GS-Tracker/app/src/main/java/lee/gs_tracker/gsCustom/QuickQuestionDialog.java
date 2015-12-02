@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Created by Joe Paul on 11/25/2015.
+ * Created by Youssef Boules on 11/25/2015.
  *
  * creates an AlertDialog from a title string and a message string or custom view and randomizes
  *    all the background and text colors / text sizes of every nested viewgroup and textview

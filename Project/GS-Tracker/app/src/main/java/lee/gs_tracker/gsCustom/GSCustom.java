@@ -27,7 +27,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import lee.gs_tracker.R;
 
 /**
- * Created by Joe Paul on 11/24/2015.
+ * Created by Youssef Boules on 11/24/2015.
  *
  * creates a menu that enumerates all created profiles and mediates between the profile listings
  *    and the classes that manage each profile type

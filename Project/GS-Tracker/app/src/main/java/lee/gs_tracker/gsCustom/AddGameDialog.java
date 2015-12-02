@@ -20,7 +20,7 @@ import android.widget.Toast;
 import lee.gs_tracker.R;
 
 /**
- * Created by Joe Paul on 11/25/2015.
+ * Created by Youssef Boules on 11/25/2015.
  *
  * displays the dialog to add a custom profile when the user clicks on the action button
  * in the GSCustom activity
