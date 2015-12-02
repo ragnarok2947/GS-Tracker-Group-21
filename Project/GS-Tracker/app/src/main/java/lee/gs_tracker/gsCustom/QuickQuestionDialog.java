@@ -189,21 +189,22 @@ public class QuickQuestionDialog implements DialogInterface.OnClickListener
       for (int i = 0; i < buttonValues.length; i++)
       {
          String text = null;
+         // if a button text was specified, set button text to text specified
          if (buttonTexts != null && i < buttonTexts.length && buttonTexts[i].length() > 0)
             text = buttonTexts [i];
-         else if (buttonValues [i] < 0)
+         else if (buttonValues [i] < 0) // else if is negative button, set text to "Cancel"
             text = "Cancel";
-         else if (buttonValues [i] > 0)
+         else if (buttonValues [i] > 0) // else if is positive button, set text to "Yes"
             text = "Yes";
-         else
+         else                           // else is neutral and text set to "OK"
             text = "OK";
-         if (buttonValues [i] < 0)
+         if (buttonValues [i] < 0)           // negative button < 0
             b.setNegativeButton(text, this);
-         else if (buttonValues [i] > 0)
+         else if (buttonValues [i] > 0)      // positive button > 0
             b.setPositiveButton(text, this);
-         else
+         else                                // neutral button == 0
             b.setNeutralButton(text, this);
-         if (buttonTags != null && i < buttonTags.length)
+         if (buttonTags != null && i < buttonTags.length) // add button tags to HashMap
             this.buttonTags.put(
                   buttonValues [i] > 0 ? 1 : buttonValues [i] < 0 ? -1 : 0,
                   buttonTags [i]

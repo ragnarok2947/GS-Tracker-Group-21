@@ -164,7 +164,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       // as you specify a parent activity in AndroidManifest.xml.
       int id = item.getItemId();
 
-      //noinspection SimplifiableIfStatement
+      // exit activity to parent activity if user hits back button in action bar
       if (id == android.R.id.home)
       {
          NavUtils.navigateUpFromSameTask(this);
@@ -254,18 +254,18 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
    // updates all UI elements
    private void PostInvalidateAll()
    {
-      if (teamAutoCompleteAdapter != null)
+      if (teamAutoCompleteAdapter != null) // updates the adapter that populates team suggestions
       {
          teamAutoCompleteAdapter.clear();
          teamAutoCompleteAdapter.addAll(CustomData.Sports.GetAllTeams());
       }
-      if (gamesListView != null)
+      if (gamesListView != null) // updates the games list GridView
       {
          gamesListAdapter.notifyDataSetInvalidated();
          gamesListAdapter.notifyDataSetChanged();
          GSCustom.InvalidateRec(gamesListView);
       }
-      if (gameStatsView != null)
+      if (gameStatsView != null) // updates the stats GridView
       {
          gameStatsAdapter.notifyDataSetInvalidated();
          gameStatsAdapter.notifyDataSetChanged();
@@ -358,6 +358,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                               getArguments().getInt(ARG_SECTION_NUMBER),
                                        Toast.LENGTH_SHORT).show();*/
 
+         // contains 3 sections that display content (sections 1-3) and 2 dummy sections
+         //    that automatically scroll to one of those 3 sections in an attempt to
+         //    implement rotation between the sections
          switch (getArguments().getInt(ARG_SECTION_NUMBER))
          {
             // section 1 - add game, inflate, initialize all view elements and data
