@@ -12,12 +12,13 @@
       android:text="Date:"
       android:id="@+id/sports_add_date_label"
       android:textSize="20sp"
-      android:layout_alignParentTop="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
       android:textColor="@color/colorSportsText"
       android:focusable="false"
-      android:focusableInTouchMode="false"/>
+      android:focusableInTouchMode="false"
+      android:layout_below="@+id/sports_add_title"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_marginTop="30dp"/>
 
    <Button
       style="?android:attr/buttonStyleSmall"
@@ -25,11 +26,6 @@
       android:layout_height="wrap_content"
       android:id="@+id/sports_add_date"
       android:text="[Select Date]"
-      android:layout_alignParentTop="true"
-      android:layout_toRightOf="@+id/sports_add_your_team_label"
-      android:layout_toEndOf="@+id/sports_add_your_team_label"
-      android:layout_marginStart="30dp"
-      android:layout_marginLeft="30dp"
       android:textColor="@color/colorSportsTextHint"
       android:background="@color/colorPrimary"
       android:textSize="20sp"
@@ -41,7 +37,11 @@
       android:paddingLeft="10dp"
       android:paddingRight="10dp"
       android:focusable="false"
-      android:focusableInTouchMode="false"/>
+      android:focusableInTouchMode="false"
+      android:layout_alignTop="@+id/sports_add_date_label"
+      android:layout_toRightOf="@+id/sports_add_opponent_team_label"
+      android:layout_toEndOf="@+id/sports_add_opponent_team_label"
+      android:layout_marginLeft="10dp"/>
 
    <AutoCompleteTextView
       android:layout_width="wrap_content"
@@ -67,7 +67,6 @@
       android:layout_height="wrap_content"
       android:text="Your Team:"
       android:id="@+id/sports_add_your_team_label"
-      android:textSize="20sp"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/sports_add_date"
@@ -75,21 +74,25 @@
       android:textColor="@color/colorSportsText"
       android:singleLine="true"
       android:focusable="false"
-      android:focusableInTouchMode="false"/>
+      android:focusableInTouchMode="false"
+      android:textSize="20sp"/>
 
    <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Opponent Team:"
       android:id="@+id/sports_add_opponent_team_label"
-      android:layout_below="@+id/sports_add_your_team"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
-      android:layout_marginTop="5dp"
       android:textColor="@color/colorSportsText"
-      android:singleLine="true"
+      android:singleLine="false"
       android:focusable="false"
-      android:focusableInTouchMode="false"/>
+      android:focusableInTouchMode="false"
+      android:textSize="20sp"
+      android:layout_below="@+id/sports_add_your_team"
+      android:layout_alignRight="@+id/sports_add_your_score_label"
+      android:layout_alignEnd="@+id/sports_add_your_score_label"
+      android:layout_marginTop="5dp"/>
 
    <AutoCompleteTextView
       android:layout_width="wrap_content"
@@ -116,14 +119,15 @@
       android:layout_height="wrap_content"
       android:text="Your Score:"
       android:id="@+id/sports_add_your_score_label"
-      android:layout_marginTop="5dp"
+      android:layout_marginTop="15dp"
       android:layout_below="@+id/sports_add_opponent_team"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:textColor="@color/colorSportsText"
       android:focusable="false"
       android:focusableInTouchMode="false"
-      android:singleLine="true"/>
+      android:singleLine="true"
+      android:textSize="20sp"/>
 
    <TextView
       android:layout_width="wrap_content"
@@ -137,7 +141,8 @@
       android:textColor="@color/colorSportsText"
       android:focusable="false"
       android:focusableInTouchMode="false"
-      android:singleLine="true"/>
+      android:singleLine="false"
+      android:textSize="20sp"/>
 
    <EditText
       android:layout_width="wrap_content"
@@ -190,5 +195,17 @@
       android:paddingRight="5dp"
       android:focusable="false"
       android:focusableInTouchMode="false"/>
+
+   <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:text="Add a Game"
+      android:id="@+id/sports_add_title"
+      android:textStyle="bold"
+      android:textSize="30sp"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:textColor="@color/colorSportsText"/>
 
 </RelativeLayout>

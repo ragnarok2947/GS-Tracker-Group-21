@@ -110,8 +110,8 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       catch (Exception e)
       {
          e.printStackTrace();
-         Toast.makeText(this, "failed to create back button;\n" + e.toString(), Toast.LENGTH_LONG)
-               .show();
+         /*Toast.makeText(this, "failed to create back button;\n" + e.toString(), Toast.LENGTH_LONG)
+               .show();*/
       }
 
       // Create the adapter that will return a fragment for each of the three
@@ -121,6 +121,11 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       // Set up the ViewPager with the sections adapter.
       mViewPager = (ViewPager) findViewById(R.id.container);
       mViewPager.setAdapter(mSectionsPagerAdapter);
+      mViewPager.addOnPageChangeListener(mSectionsPagerAdapter);
+      if (CustomData.Sports.GetTotalGamesPlayed() == 0)
+         mViewPager.setCurrentItem(1);
+      else
+         mViewPager.setCurrentItem(3);
    }
 
    @Override
@@ -356,9 +361,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          switch (getArguments().getInt(ARG_SECTION_NUMBER))
          {
             // section 1 - add game, inflate, initialize all view elements and data
-            case 0:
+            case 1:
             {
-               if (gamesListView != null)
+               if (addGameView != null)
                   rootView = addGameView;
                else
                {
@@ -404,7 +409,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             }
 
             // section 2 - list of games
-            case 1:
+            case 2:
             {
                if (gamesListView != null)
                   rootView = gamesListView;
@@ -444,12 +449,19 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
             }
 
             // section 3 - stats
-            case 2:
+            case 3:
             {
-               rootView = gameStatsView = inflater.inflate(R.layout.sports_stats,
-                                                           container, false);
-               GridView gv = (GridView) rootView.findViewById(R.id.sports_stat_grid);
-               gv.setAdapter(gameStatsAdapter = new StatAdapter());
+               if (gameStatsView != null)
+                  rootView = gameStatsView;
+               else
+               {
+                  rootView = gameStatsView = inflater.inflate(
+                        R.layout.sports_stats,
+                        container, false
+                  );
+                  GridView gv = (GridView) rootView.findViewById(R.id.sports_stat_grid);
+                  gv.setAdapter(gameStatsAdapter = new StatAdapter());
+               }
 
                break;
             }
@@ -460,6 +472,10 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
          }
 
          // error view returned in case none of above apply (was placeholder mid-development)
+         // now dummy view for sections 0 && 4:
+         //    created onpagechangelistener for ViewPager fragment container so that automatically
+         //    scrolls to page 3 from page 0 and to page 1 from page 4 so that the pages
+         //    defined above (1-3) would "rotate"
          if (rootView == null)
          {
             rootView = new TextView(getContext());
@@ -469,12 +485,9 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                         LinearLayout.LayoutParams.MATCH_PARENT
                   )
             );
-            rootView.setPadding(Dp(10), Dp(10), Dp(10), Dp(10));
-            rootView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            ((TextView)rootView).setTextSize(TypedValue.COMPLEX_UNIT_SP, 60);
-            ((TextView)rootView).setTextColor(Color.parseColor("#FFFFFF"));
-            ((TextView)rootView).setText("section #" + getArguments().getInt(ARG_SECTION_NUMBER)
-                                               + " does not exist");
+            rootView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            ((TextView)rootView).setTextColor(Color.parseColor("#C00000"));
+            ((TextView)rootView).setText("");
          }
 
          return rootView;
@@ -728,7 +741,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
     * one of the sections/tabs/pages.
     */
-   public class SectionsPagerAdapter extends FragmentPagerAdapter
+   public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener
    {
       public SectionsPagerAdapter(FragmentManager fm)
       {
@@ -747,7 +760,7 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
       public int getCount()
       {
          // Show 3 total pages.
-         return 3;
+         return 5;
       }
 
       @Override
@@ -763,6 +776,24 @@ public class Sports extends AppCompatActivity implements View.OnClickListener,
                return "Stat Viewer";
          }
          return null;
+      }
+
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){}
+
+      @Override
+      public void onPageScrollStateChanged(int state){}
+
+      // go to page 3 from page 0 and to page 1 from page 4
+      @Override
+      public void onPageSelected(int position)
+      {
+         if (position < 1)
+            position = 3;
+         if (position > 3)
+            position = 1;
+         ((ViewPager)Sports.instance.findViewById(R.id.container))
+               .setCurrentItem(position);
       }
    }
 }
