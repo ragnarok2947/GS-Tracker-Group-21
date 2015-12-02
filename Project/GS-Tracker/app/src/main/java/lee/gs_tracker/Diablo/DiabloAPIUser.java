@@ -18,6 +18,7 @@ public class DiabloAPIUser {
         String InputURL = "https://us.api.battle.net/d3/profile/" + btag + "/?locale=en_US&apikey=dzdyu73w47us458g5h89grjqgfs4ctpw";
         Obj = APIConnection.sentGet(InputURL);//should work even though it's in the WOWAPI class
 
+
     }
 
     public static JSONArray getCharArray()throws Exception {

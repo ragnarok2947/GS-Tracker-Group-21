@@ -1,5 +1,7 @@
 package lee.gs_tracker.Diablo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +17,12 @@ import android.widget.LinearLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+
+import lee.gs_tracker.MainActivity;
 import lee.gs_tracker.R;
+import lee.gs_tracker.WoW.WoWCredentials;
+import lee.gs_tracker.WoW.WoWRogue;
 
 public class DiabloCharSelect extends AppCompatActivity {
 
@@ -59,6 +66,56 @@ public class DiabloCharSelect extends AppCompatActivity {
         catch(Exception e){
 
         }
+    }
+
+    public void deleteTemplate(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Saved User?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                File file = getBaseContext().getFileStreamPath("DiabloUser.txt");
+                file.delete();
+                Intent intent = new Intent(DiabloCharSelect.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void resetTemplate(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Reset Saved User?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                File file = getBaseContext().getFileStreamPath("DiabloUser.txt");
+                file.delete();
+                Intent intent = new Intent(DiabloCharSelect.this, DiabloCredentials.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

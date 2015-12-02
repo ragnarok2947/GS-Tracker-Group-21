@@ -118,8 +118,22 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         if(TagName == "DiabloIII"){
-            Intent intent = new Intent(this, DiabloCredentials.class);
-            startActivity(intent);
+            File file = getBaseContext().getFileStreamPath("DiabloUser.txt");
+            if(file.exists()){
+                try{
+                    String data = new Scanner(file).next();
+                    JSONObject User = (JSONObject)JSONValue.parse(data);
+                    startActivity(new DiabloCredentials().gotToCharSelect(this, User.get("BattleTag").toString()));
+                }
+                catch(Exception E){
+                    file.delete();
+                    E.printStackTrace();
+                }
+            }
+            else {
+                Intent intent = new Intent(this, DiabloCredentials.class);
+                startActivity(intent);
+            }
         }
 
         else if(TagName == "Custom"){
