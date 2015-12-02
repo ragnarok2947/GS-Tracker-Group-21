@@ -124,7 +124,6 @@ public class StarcraftUser extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-<<<<<<< HEAD
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,6 +147,5 @@ public class StarcraftUser extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-=======
->>>>>>> origin/master
+
 }
