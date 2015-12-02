@@ -24,7 +24,9 @@
         <activity
             android:name=".WoW.WoWRogue"
             android:label="@string/title_activity_wo_wrogue"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -32,7 +34,9 @@
         <activity
             android:name=".WoW.WoWCredentials"
             android:label="@string/title_activity_wo_wcredentials"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -40,7 +44,9 @@
         <activity
             android:name=".WoW.WoWHunter"
             android:label="@string/title_activity_wo_whunter"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -48,7 +54,9 @@
         <activity
             android:name=".WoW.WoWPaladin"
             android:label="@string/title_activity_wo_wpaladin"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -56,7 +64,9 @@
         <activity
             android:name=".WoW.WoWMage"
             android:label="@string/title_activity_wo_wmage"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -64,7 +74,9 @@
         <activity
             android:name=".WoW.WoWShaman"
             android:label="@string/title_activity_wo_wshaman"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -72,7 +84,9 @@
         <activity
             android:name=".WoW.WoWWarrior"
             android:label="@string/title_activity_wo_wwarrior"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -80,7 +94,9 @@
         <activity
             android:name=".WoW.WoWDruid"
             android:label="@string/title_activity_wo_wdruid"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -88,7 +104,9 @@
         <activity
             android:name=".WoW.WoWPriest"
             android:label="@string/title_activity_wo_wpriest"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
@@ -96,7 +114,9 @@
         <activity
             android:name=".WoW.WoWWarlock"
             android:label="@string/title_activity_wo_wwarlock"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lee.gs_tracker.MainActivity" />
