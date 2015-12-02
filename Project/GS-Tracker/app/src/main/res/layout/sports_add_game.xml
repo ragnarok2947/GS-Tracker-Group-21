@@ -40,7 +40,8 @@
       android:focusableInTouchMode="false"
       android:layout_alignTop="@+id/sports_add_date_label"
       android:layout_toRightOf="@+id/sports_add_opponent_team_label"
-      android:layout_toEndOf="@+id/sports_add_opponent_team_label"/>
+      android:layout_toEndOf="@+id/sports_add_opponent_team_label"
+      android:layout_marginLeft="10dp"/>
 
    <AutoCompleteTextView
       android:layout_width="wrap_content"
