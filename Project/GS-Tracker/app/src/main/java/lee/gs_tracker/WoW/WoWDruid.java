@@ -52,7 +52,7 @@ public class WoWDruid extends AppCompatActivity {
     }
 
 
-    //set max range and pet health for hunter
+
 
     public void setFields(JSONObject User, JSONObject userStats){
         Object UserStats = WoWAPIUser.getStats(User);
@@ -67,25 +67,24 @@ public class WoWDruid extends AppCompatActivity {
         ((TextView)findViewById(R.id.agilityEdit)).setText(WoWAPIUser.getAgility(userStats));
         ((TextView)findViewById(R.id.intellectEdit)).setText(WoWAPIUser.getIntellect(userStats));
         ((TextView)findViewById(R.id.staminaEdit)).setText(WoWAPIUser.getStamina(userStats));
-        ((TextView)findViewById(R.id.manaEdit)).setText(WoWAPIUser.getClassPower(userStats)); //change
-        ((TextView)findViewById(R.id.spellCritEdit)).setText(WoWAPIUser.getSpellCrit(userStats)); //change
+        ((TextView)findViewById(R.id.manaEdit)).setText(WoWAPIUser.getClassPower(userStats));
+        ((TextView)findViewById(R.id.spellCritEdit)).setText(WoWAPIUser.getSpellCrit(userStats));
         ((TextView)findViewById(R.id.specEdit)).setText(WoWAPIUser.getSpec(User));
 
         Spinner dropdown = (Spinner)findViewById(R.id.armorList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));  //dropdown for armor and talents
         dropdown.setAdapter(adapter);
 
 
         Spinner dd = (Spinner)findViewById(R.id.talentList);
         ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateTalentList(User));
         dd.setAdapter(adapt);
-        //continue here
 
 
     }
 
     public void deleteTemplate(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);           //will delete the file and return to main menu
         builder.setTitle("Delete Saved User?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -110,7 +109,7 @@ public class WoWDruid extends AppCompatActivity {
     }
 
     public void resetTemplate(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);  //will delete the file but return the credentials page
         builder.setTitle("Reset Saved User?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

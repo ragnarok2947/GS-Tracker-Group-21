@@ -28,7 +28,7 @@ public class StarcraftCredentials extends AppCompatActivity {
     }
 
     public String getProfileName(){
-        EditText mEdit   = (EditText)findViewById(R.id.editText);
+        EditText mEdit   = (EditText)findViewById(R.id.editText);        //get the profile name and ID from the text fields
         String profileName = mEdit.getText().toString();
         return profileName;
     }
@@ -46,7 +46,7 @@ public class StarcraftCredentials extends AppCompatActivity {
         FileOutputStream outputStream;
         String string = "";
         try {
-            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);   //saves the file internally
             outputStream.write(Data.getBytes());
             outputStream.close();
         } catch (Exception e) {
@@ -59,8 +59,8 @@ public class StarcraftCredentials extends AppCompatActivity {
         JSONObject User = new JSONObject();
         User.put("ProfileName", getProfileName());
         User.put("ID", getID());
-        createFile("StarCraftUser.txt", User.toJSONString());
-        //new MainActivity().writeToFile("WoWUser.txt", User.toJSONString());
+        createFile("StarCraftUser.txt", User.toJSONString());  //creates the StarCraft File to bes aved
+
     }
 
 
@@ -69,14 +69,11 @@ public class StarcraftCredentials extends AppCompatActivity {
         String InputURL = "https://us.api.battle.net/sc2/profile/" + getID() + "/1/" + getProfileName() + "/?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = null;
 
-        Obj = APIConnection.sentGet(InputURL);
+        Obj = APIConnection.sentGet(InputURL);          //go to template based on user credentials
 
 
         if (Obj == null) {
-            //invalid credentials --
 
-           /* new QuickQuestionDialog(this, null, null, "Please input valid credentials for your WoW Character", "Error",
-                    new int[]{0});*/
             errorOnUser(view);
 
         }
@@ -93,14 +90,14 @@ public class StarcraftCredentials extends AppCompatActivity {
         String InputURL = "https://us.api.battle.net/sc2/profile/" + ID + "/1/" + ProfileName + "/?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = APIConnection.sentGet(InputURL);
 
-        Intent intent = new Intent(context, StarcraftUser.class);
+        Intent intent = new Intent(context, StarcraftUser.class);         //go to the template based on internally saved credentials
         intent.putExtra(EXTRA_MESSAGE, Obj.toString());
         return intent;
     }
 
     public void errorOnUser(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error: Please input valid credentials");
+        builder.setTitle("Error: Please input valid credentials");          //alert the user for bad credentials
 
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override

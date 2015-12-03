@@ -39,7 +39,6 @@ public class StarcraftUser extends AppCompatActivity {
         try {
             Object obj = Parser.parse(From);
             User = (JSONObject)(obj);   //get JSONObject for this user
-            //JSONObject userStats = (JSONObject) (obj);
 
             setFields(User);
 
@@ -53,7 +52,7 @@ public class StarcraftUser extends AppCompatActivity {
     public void setFields(JSONObject User){
         JSONObject Career = StarcraftAPIUser.getCareer(User);
         String PrimaryRace = StarcraftAPIUser.getPrimaryRace(Career);
-                ((TextView) findViewById(R.id.profileText)).setText((StarcraftAPIUser.getProfileName(User)));
+                ((TextView) findViewById(R.id.profileText)).setText((StarcraftAPIUser.getProfileName(User)));         //set the statistics fields for the user
         ((TextView) findViewById(R.id.textView12)).setText((StarcraftAPIUser.getPrimaryRace(Career)));
         ((TextView) findViewById(R.id.textView14)).setText((StarcraftAPIUser.getTerranWins(Career)));
         ((TextView) findViewById(R.id.textView25)).setText((StarcraftAPIUser.getprotossWins(Career)));
@@ -66,7 +65,7 @@ public class StarcraftUser extends AppCompatActivity {
             ((ImageView) findViewById(R.id.raceView)).setImageResource(R.drawable.terran);
         }
         else if(PrimaryRace.equals("PROTOSS")){
-            ((ImageView) findViewById(R.id.raceView)).setImageResource(R.drawable.protoss);
+            ((ImageView) findViewById(R.id.raceView)).setImageResource(R.drawable.protoss);          //set the pictures based on race
         }
         else{
             ((ImageView) findViewById(R.id.raceView)).setImageResource(R.drawable.zerg);
@@ -82,7 +81,7 @@ public class StarcraftUser extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");
+                File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");          //delete the file and return to the main menu
                 file.delete();
                 Intent intent = new Intent(StarcraftUser.this, MainActivity.class);
                 startActivity(intent);
@@ -107,7 +106,7 @@ public class StarcraftUser extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");
+                File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");          //delete the file and return to the credentials page
                 file.delete();
                 Intent intent = new Intent(StarcraftUser.this, StarcraftCredentials.class);
                 startActivity(intent);

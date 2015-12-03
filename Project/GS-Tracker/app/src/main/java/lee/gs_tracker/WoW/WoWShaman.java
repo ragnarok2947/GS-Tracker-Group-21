@@ -40,7 +40,7 @@ public class WoWShaman extends AppCompatActivity {
             obj = Parser.parse(WoWAPIUser.getStats(User).toString());
             JSONObject userStats = (JSONObject) (obj);
 
-            new DownloadImageTask((ImageView) findViewById(R.id.imageView)) //set thumbnail and fields for Rogue
+            new DownloadImageTask((ImageView) findViewById(R.id.imageView)) //set thumbnail and fields
                     .execute(WoWAPIUser.getCharPic(User));
             setFields(User, userStats);
 
@@ -52,7 +52,7 @@ public class WoWShaman extends AppCompatActivity {
     }
 
 
-    //set max range and pet health for hunter
+
 
     public void setFields(JSONObject User, JSONObject userStats){
         Object UserStats = WoWAPIUser.getStats(User);
@@ -67,19 +67,19 @@ public class WoWShaman extends AppCompatActivity {
         ((TextView)findViewById(R.id.agilityEdit)).setText(WoWAPIUser.getAgility(userStats));
         ((TextView)findViewById(R.id.intellectEdit)).setText(WoWAPIUser.getIntellect(userStats));
         ((TextView)findViewById(R.id.staminaEdit)).setText(WoWAPIUser.getStamina(userStats));
-        ((TextView)findViewById(R.id.manaEdit)).setText(WoWAPIUser.getClassPower(userStats)); //change
-        ((TextView)findViewById(R.id.spellPowerEdit)).setText(WoWAPIUser.getSpellPower(userStats)); //change
+        ((TextView)findViewById(R.id.manaEdit)).setText(WoWAPIUser.getClassPower(userStats));
+        ((TextView)findViewById(R.id.spellPowerEdit)).setText(WoWAPIUser.getSpellPower(userStats));
         ((TextView)findViewById(R.id.specEdit)).setText(WoWAPIUser.getSpec(User));
 
         Spinner dropdown = (Spinner)findViewById(R.id.armorList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));   //for armor and talents
         dropdown.setAdapter(adapter);
 
 
         Spinner dd = (Spinner)findViewById(R.id.talentList);
         ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateTalentList(User));
         dd.setAdapter(adapt);
-        //continue here
+
 
 
     }
@@ -91,7 +91,7 @@ public class WoWShaman extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");     //delete the file and return to the main menu
                 file.delete();
                 Intent intent = new Intent(WoWShaman.this, MainActivity.class);
                 startActivity(intent);
@@ -116,7 +116,7 @@ public class WoWShaman extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");  //will delete the file but return the credentials page
                 file.delete();
                 Intent intent = new Intent(WoWShaman.this, WoWCredentials.class);
                 startActivity(intent);

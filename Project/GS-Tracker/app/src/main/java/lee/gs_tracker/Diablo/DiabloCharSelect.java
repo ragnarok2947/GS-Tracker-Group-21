@@ -69,7 +69,7 @@ public class DiabloCharSelect extends AppCompatActivity {
     }
 
     public void deleteTemplate(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);           //delete the file and return to the main menu
         builder.setTitle("Delete Saved User?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -100,7 +100,7 @@ public class DiabloCharSelect extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("DiabloUser.txt");
+                File file = getBaseContext().getFileStreamPath("DiabloUser.txt");           //delete file and return to the credentials page
                 file.delete();
                 Intent intent = new Intent(DiabloCharSelect.this, DiabloCredentials.class);
                 startActivity(intent);

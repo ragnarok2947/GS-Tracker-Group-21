@@ -79,10 +79,10 @@ public class WoWRogue extends AppCompatActivity {
 
 
         Spinner dd = (Spinner)findViewById(R.id.talentList);
-        ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateTalentList(User));
+        ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateTalentList(User));  //dropdowns for armor and talents
         dd.setAdapter(adapt);
 
-        //continue here
+
 
 
     }
@@ -96,7 +96,7 @@ public class WoWRogue extends AppCompatActivity {
                     dialog.dismiss();
                     File file = getBaseContext().getFileStreamPath("WoWUser.txt");
                     file.delete();
-                    Intent intent = new Intent(WoWRogue.this, MainActivity.class);
+                    Intent intent = new Intent(WoWRogue.this, MainActivity.class);       //delete file and return to main menu
                     startActivity(intent);
                 }
             });
@@ -119,7 +119,7 @@ public class WoWRogue extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");         //will delete the file but return the credentials page
                 file.delete();
                 Intent intent = new Intent(WoWRogue.this, WoWCredentials.class);
                 startActivity(intent);

@@ -8,14 +8,14 @@ import org.json.simple.JSONObject;
 public class StarcraftAPIUser {
     public static String getProfileName(org.json.simple.JSONObject User){
         try{
-            return User.get("displayName").toString();
+            return User.get("displayName").toString();        //get the profile name of the user from the object
         }
         catch(Exception e){
             return "ERROR";
         }
     }
 
-    public static org.json.simple.JSONObject getCareer(org.json.simple.JSONObject User){
+    public static org.json.simple.JSONObject getCareer(org.json.simple.JSONObject User){   //get career stats
         try{
             return (JSONObject) User.get("career");
         }

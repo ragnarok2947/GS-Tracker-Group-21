@@ -43,7 +43,7 @@ public class WoWPriest extends AppCompatActivity {
             obj = Parser.parse(WoWAPIUser.getStats(User).toString());
             JSONObject userStats = (JSONObject) (obj);
 
-            new DownloadImageTask((ImageView) findViewById(R.id.imageView)) //set thumbnail and fields for Rogue
+            new DownloadImageTask((ImageView) findViewById(R.id.imageView)) //set thumbnail and fields
                     .execute(WoWAPIUser.getCharPic(User));
             setFields(User, userStats);
 
@@ -71,7 +71,7 @@ public class WoWPriest extends AppCompatActivity {
         ((TextView)findViewById(R.id.specEdit)).setText(WoWAPIUser.getSpec(User));
 
         Spinner dropdown = (Spinner)findViewById(R.id.armorList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateItemList(User));   //for armor and talents
         dropdown.setAdapter(adapter);
 
 
@@ -79,7 +79,7 @@ public class WoWPriest extends AppCompatActivity {
         ArrayAdapter<String> adapt = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, WoWAPIUser.generateTalentList(User));
         dd.setAdapter(adapt);
 
-        //continue here
+
 
 
     }
@@ -91,7 +91,7 @@ public class WoWPriest extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");           //delete the file and return to main menu
                 file.delete();
                 Intent intent = new Intent(WoWPriest.this, MainActivity.class);
                 startActivity(intent);
@@ -116,7 +116,7 @@ public class WoWPriest extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                File file = getBaseContext().getFileStreamPath("WoWUser.txt");
+                File file = getBaseContext().getFileStreamPath("WoWUser.txt");          //will delete the file but return the credentials page
                 file.delete();
                 Intent intent = new Intent(WoWPriest.this, WoWCredentials.class);
                 startActivity(intent);
