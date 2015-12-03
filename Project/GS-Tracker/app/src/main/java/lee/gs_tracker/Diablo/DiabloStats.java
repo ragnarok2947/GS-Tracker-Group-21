@@ -113,59 +113,79 @@ public class DiabloStats extends AppCompatActivity {
             .setTextSize(25);
             linear.addView();*/
 
-            //Active skills title
+            //Active skills
             TextView activeskills = new TextView(this);
-            activeskills.setText("Active Skills:");
-            activeskills.setLayoutParams(param);
-            activeskills.setTextSize(15);
-            activeskills.setPadding(0, 5, 0, 0);
-
-            //active skills list, delimited by "|"
-            JSONArray skills = DiabloAPIUser.getActiveSkillArray();
+            TextView activeskilltext = new TextView(this);
             String skillbar = "";
+            JSONArray skills;
+            try {
+                activeskills.setText("Active Skills:");
+                activeskills.setLayoutParams(param);
+                activeskills.setTextSize(15);
+                activeskills.setPadding(0, 5, 0, 0);
 
-            cur = skills.getJSONObject(0).getJSONObject("skill");
-            skillbar = skillbar.concat(cur.get("name").toString());
+                activeskilltext.setLayoutParams(param);
+                activeskilltext.setPadding(0, 5, 0, 10);
+                activeskilltext.setTextSize(15);
 
-            for(int i = 1; i<skills.length(); i++){
-                cur = skills.getJSONObject(i).getJSONObject("skill");
-                skillbar = skillbar.concat(" | " + cur.get("name").toString());
+
+
+                skills = DiabloAPIUser.getActiveSkillArray();
+
+                cur = skills.getJSONObject(0).getJSONObject("skill");
+                skillbar = skillbar.concat(cur.get("name").toString());
+
+                for (int i = 1; i < skills.length(); i++) {
+                    cur = skills.getJSONObject(i).getJSONObject("skill");
+                    skillbar = skillbar.concat(" | " + cur.get("name").toString());
+
+                }
+
+                activeskilltext.setText(skillbar);
 
             }
-
-            TextView activeskilltext = new TextView(this);
-            activeskilltext.setText(skillbar);
-            activeskilltext.setLayoutParams(param);
-            activeskilltext.setPadding(0, 5, 0, 10);
-            activeskilltext.setTextSize(15);
+            catch(Exception e){
+                activeskilltext.setText("This character doesn't have any active skills equipped");
+            }
             linear.addView(activeskills);
             linear.addView(activeskilltext);
 
-            //Active skills title
+            //Passive skills
             TextView passiveskills = new TextView(this);
-            passiveskills.setText("Passive Skills:");
-            passiveskills.setLayoutParams(param);
-            passiveskills.setTextSize(15);
-            passiveskills.setPadding(0, 5, 0, 0);
-            linear.addView(passiveskills);
+            TextView passiveskilltext = new TextView(this);
 
-            //Passive Skills, delimited by "|"
-            skills = DiabloAPIUser.getPassiveSkillArray();
-            skillbar = "";
-            cur = skills.getJSONObject(0).getJSONObject("skill");
-            skillbar = skillbar.concat(cur.get("name").toString());
+            try {
+                passiveskills.setText("Passive Skills:");
+                passiveskills.setLayoutParams(param);
+                passiveskills.setTextSize(15);
+                passiveskills.setPadding(0, 5, 0, 0);
 
-            for(int i = 1; i<skills.length(); i++){
-                cur = skills.getJSONObject(i).getJSONObject("skill");
-                skillbar = skillbar.concat(" | " + cur.get("name").toString());
+                passiveskilltext.setLayoutParams(param);
+                passiveskilltext.setPadding(0, 5, 0, 10);
+                passiveskilltext.setTextSize(15);
+
+
+
+                //Passive Skills, delimited by "|"
+                skills = DiabloAPIUser.getPassiveSkillArray();
+                skillbar = "";//empty the skillbar
+                cur = skills.getJSONObject(0).getJSONObject("skill");
+                skillbar = skillbar.concat(cur.get("name").toString());
+
+                for (int i = 1; i < skills.length(); i++) {
+                    cur = skills.getJSONObject(i).getJSONObject("skill");
+                    skillbar = skillbar.concat(" | " + cur.get("name").toString());
+
+                }
+
+                passiveskilltext.setText(skillbar);
 
             }
+            catch(Exception e){
+                passiveskilltext.setText("This character doesn't have any passive skills");
+            }
 
-            TextView passiveskilltext = new TextView(this);
-            passiveskilltext.setText(skillbar);
-            passiveskilltext.setLayoutParams(param);
-            passiveskilltext.setPadding(0, 5, 0, 10);
-            passiveskilltext.setTextSize(15);
+            linear.addView(passiveskills);
             linear.addView(passiveskilltext);
 
         }
