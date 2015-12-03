@@ -95,7 +95,7 @@ public class DiabloStats extends AppCompatActivity {
 
             //dexterity
             TextView dexterity = new TextView(this);
-            dexterity.setText("Decterity: " + cur.get("dexterity").toString());
+            dexterity.setText("Dexterity: " + cur.get("dexterity").toString());
             dexterity.setLayoutParams(param);
             dexterity.setTextSize(18);
             linear.addView(dexterity);
