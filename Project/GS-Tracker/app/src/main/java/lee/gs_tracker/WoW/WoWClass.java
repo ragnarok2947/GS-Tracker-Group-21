@@ -16,7 +16,7 @@ import lee.gs_tracker.R;
 public class WoWClass extends AppCompatActivity{
 
     public void deleteTemplate(final Context context){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);                //prompt the user to delete the template, find the file and delete it internally
         builder.setTitle("Delete Saved User?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -41,7 +41,7 @@ public class WoWClass extends AppCompatActivity{
     }
 
     public void resetTemplate(final Context context){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);   //reset is the same except it goes to the WoWCredentials activity
         builder.setTitle("Reset Saved User?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

@@ -28,7 +28,7 @@ public class WoWCredentials extends AppCompatActivity {
     }
 
     public String getCharName(){
-        EditText mEdit   = (EditText)findViewById(R.id.editText);
+        EditText mEdit   = (EditText)findViewById(R.id.editText);   //get Char name and servername from text fields
         String CharName = mEdit.getText().toString();
         return CharName;
     }
@@ -40,17 +40,13 @@ public class WoWCredentials extends AppCompatActivity {
     }
 
 
-    public String getClassName(){  //returns the characters class to use the appropriate Template
-
-        return null;
-    }
     public File createFile(String FileName, String Data){
 
         File file = new File(getFilesDir(),FileName);
         FileOutputStream outputStream;
         String string = "";
         try {
-            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
+            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);    //save the file internally
             outputStream.write(Data.getBytes());
             outputStream.close();
         } catch (Exception e) {
@@ -63,8 +59,7 @@ public class WoWCredentials extends AppCompatActivity {
         JSONObject User = new JSONObject();
         User.put("Server", getServerName());
         User.put("CharName", getCharName());
-        createFile("WoWUser.txt", User.toJSONString());
-        //new MainActivity().writeToFile("WoWUser.txt", User.toJSONString());
+        createFile("WoWUser.txt", User.toJSONString());  //this will create a JSON Object and save the JSON String to a file
     }
 
 
@@ -73,21 +68,18 @@ public class WoWCredentials extends AppCompatActivity {
         String InputURL = "https://us.api.battle.net/wow/character/" + getServerName() + "/" + getCharName() + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = null;
 
-            Obj = WoWAPIUser.sentGet(InputURL);
+            Obj = WoWAPIUser.sentGet(InputURL);  //go to template based on credentials data
 
 
         if(Obj == null){
-            //invalid credentials --
-
-           /* new QuickQuestionDialog(this, null, null, "Please input valid credentials for your WoW Character", "Error",
-                    new int[]{0});*/
+            //invalid credentials
             errorOnUser(view);
 
         }
         else {
-            sendCharData();
+            sendCharData(); //save the credential data
             String Class = WoWAPIUser.getCharClass(Obj);
-            if (Class.equals("Rogue")) {
+            if (Class.equals("Rogue")) {                         //------------Depending on what class, go to the template
                 Intent intent = new Intent(this, WoWRogue.class);
                 intent.putExtra(EXTRA_MESSAGE, Obj.toString());
                 startActivity(intent);
@@ -125,10 +117,25 @@ public class WoWCredentials extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, Obj.toString());
                 startActivity(intent);
 
-            } else {
-                //write alert that says class currently isn't supported
+            } else { //let the user know this class isn't supported
+                notSupported(view);
             }
         }
+    }
+
+    public void notSupported(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Class is Currently not Supported");
+
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
     public void errorOnUser(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -144,7 +151,7 @@ public class WoWCredentials extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-    public Intent goToTemplate(Context context, String ServerName, String CharName){
+    public Intent goToTemplate(Context context, String ServerName, String CharName){          //goes to template based on already internally saved data
         String InputURL = "https://us.api.battle.net/wow/character/" + ServerName + "/" + CharName + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd";
         org.json.JSONObject Obj = WoWAPIUser.sentGet(InputURL);
 
@@ -195,11 +202,6 @@ public class WoWCredentials extends AppCompatActivity {
 
         }
 
-        else{
-            new QuickQuestionDialog(this, null, null, "Class is currently not supported", "Error",
-                    new int[]{0});
-            //put in alert message that says that the class is not supported
-        }
 
         return null;
     }
