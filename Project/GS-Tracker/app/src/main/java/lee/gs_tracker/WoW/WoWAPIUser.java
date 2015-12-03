@@ -40,7 +40,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class WoWAPIUser {
     public static JSONObject sentGet(String InputURL) {
         try {   //create the API call using the user input
-            //"https://us.api.battle.net/wow/character/" + ServerInput + "/" + UserInput + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd
             URL url = new URL(InputURL);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection(); //open the connection
             StrictMode.ThreadPolicy policy = new
@@ -69,7 +68,7 @@ public class WoWAPIUser {
 
     }
 
-    public static String getCharName(org.json.simple.JSONObject User){
+    public static String getCharName(org.json.simple.JSONObject User){ //get the character name from the JSONObject
         try {
             return User.get("name").toString();
 
@@ -80,7 +79,7 @@ public class WoWAPIUser {
             return "ERROR";
         }
     }
-    public static String getServer(org.json.simple.JSONObject User){
+    public static String getServer(org.json.simple.JSONObject User){  //get the Server
         try{
             return User.get("realm").toString();
         }
@@ -243,7 +242,7 @@ public class WoWAPIUser {
 
     }
 
-    public static String[] generateItemList(org.json.simple.JSONObject User){
+    public static String[] generateItemList(org.json.simple.JSONObject User){  //This generates the dropdown list of items that the character is currently equipped with
         String[] itemList = new String[17];
         int i = 0;
         JSONObject userItems = getItems(User);
@@ -406,11 +405,11 @@ public class WoWAPIUser {
         return itemList;
     }
 
-    public static String getSpec(org.json.simple.JSONObject User){
+    public static String getSpec(org.json.simple.JSONObject User){  //get the spec for that character
         JSONParser parser = new JSONParser();
 
         try{
-            org.json.simple.JSONArray talents = (org.json.simple.JSONArray)(parser.parse(getTalents(User).toString()));
+            org.json.simple.JSONArray talents = (org.json.simple.JSONArray)(parser.parse(getTalents(User).toString()));  //traverse the JSON the get the spec
             org.json.simple.JSONObject specs = (org.json.simple.JSONObject)talents.get(0);
             org.json.simple.JSONObject spec = (org.json.simple.JSONObject) specs.get("spec");
 
@@ -422,7 +421,7 @@ public class WoWAPIUser {
 
     }
 
-    public static ArrayList<String> generateTalentList(org.json.simple.JSONObject User){
+    public static ArrayList<String> generateTalentList(org.json.simple.JSONObject User){  //same with Talent list
         JSONParser parser = new JSONParser();
         ArrayList<String> talentList = new ArrayList<>();
         int i = 0;
@@ -446,11 +445,11 @@ public class WoWAPIUser {
     }
 
 
-    public static org.json.JSONObject getStats(org.json.simple.JSONObject User){
+    public static org.json.JSONObject getStats(org.json.simple.JSONObject User){  //Blizz API call to get the stats of the character
         return sentGet("https://us.api.battle.net/wow/character/" + getServer(User) + "/" + getCharName(User) + "?fields=stats&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
     }
 
-    public static org.json.JSONObject getItems(org.json.simple.JSONObject User) {
+    public static org.json.JSONObject getItems(org.json.simple.JSONObject User) {  //Blizz api call to get the items of the character
         try {
             return sentGet("https://us.api.battle.net/wow/character/" + getServer(User) + "/" + getCharName(User) + "?fields=items&locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd").getJSONObject("items");
         }
@@ -478,7 +477,7 @@ public class WoWAPIUser {
         }
     }
 
-    public static String getCharClass(JSONObject User){
+    public static String getCharClass(JSONObject User){   //Find the certain class of the character
        JSONObject Classes = sentGet("https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=bmhx5s3efzdhghwvjpr778zhg4a6yhnd");
         try {
             String ClassID = User.get("class").toString();
@@ -497,7 +496,7 @@ public class WoWAPIUser {
 
     }
 
-    public static String getCharPic(org.json.simple.JSONObject User){
+    public static String getCharPic(org.json.simple.JSONObject User){   //returns the properly formatted URL for the character profile picture
         String url = "http://render-api-us.worldofwarcraft.com/static-render/us/";
         String thumbnail = User.get("thumbnail").toString();
         url = url + thumbnail;

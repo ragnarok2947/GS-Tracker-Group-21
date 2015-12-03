@@ -12,7 +12,7 @@ public class Parent {
 
     public void setTitle(String title){
         mTitle = title;
-    }
+    }            //for child of dropdown parents
 
     public ArrayList<Child> getArrayChildren(){
         return mArrayChildren;

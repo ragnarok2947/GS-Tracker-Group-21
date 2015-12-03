@@ -32,17 +32,16 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mExpandableList = (ExpandableListView) findViewById(R.id.gameStatContent);
+        mExpandableList = (ExpandableListView) findViewById(R.id.gameStatContent);  //Create the DropDown Menus
 
         ArrayList<Parent> arrayParents = new ArrayList<Parent>();
-        ArrayList<String> arrayChildren = new ArrayList<String>();
         ArrayList<Child> customChildren = new ArrayList<Child>();
 
-        int i;
-        arrayParents.add(Initializer.initialize_Blizz());
+
+        arrayParents.add(Initializer.initialize_Blizz());  //Initialize the Blizzard Menus
 
         Parent Custom = new Parent();
-        Custom.setTitle("Custom");
+        Custom.setTitle("Custom");    //Set Custom Templates Menu
         Child CustomChild = new Child();
         CustomChild.ChildName = "Custom";
         CustomChild.Title = "Custom Templates";
@@ -57,34 +56,20 @@ public class MainActivity extends AppCompatActivity implements
         mExpandableList.setAdapter(new MyCustomAdapter(MainActivity.this, arrayParents));
         mExpandableList.setOnChildClickListener(this);
     }
-    public File createFile(String FileName, String Data){
-
-        File file = new File(getFilesDir(),FileName);
-        FileOutputStream outputStream;
-        String string = "";
-        try {
-            outputStream = openFileOutput(FileName, Context.MODE_PRIVATE);
-            outputStream.write(Data.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
 
     @Override
-    public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id)
+    public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id)  //sense which template to go to
     {
         String TagName = view.getTag().toString();
 
-        if(TagName == "WoW") {
+        if(TagName == "WoW") { //World of Warcraft
             File file = getBaseContext().getFileStreamPath("WoWUser.txt");
             if(file.exists()){       //if a WoW is is already in, grab it
 
                 try {
                     String data = new Scanner(file).next();
                     JSONObject User = (JSONObject)JSONValue.parse(data);
-                    startActivity(new WoWCredentials().goToTemplate(this, User.get("Server").toString(), User.get("CharName").toString()));
+                    startActivity(new WoWCredentials().goToTemplate(this, User.get("Server").toString(), User.get("CharName").toString()));  //try to get the Server and Charname from the file and go to the template
 
                 }
                 catch(Exception E){
@@ -94,13 +79,13 @@ public class MainActivity extends AppCompatActivity implements
 
             }
             else{
-                Intent intent = new Intent(this, WoWCredentials.class);
+                Intent intent = new Intent(this, WoWCredentials.class);  //else prompt for credentials
                 startActivity(intent);
             }
 
         }
         else if(TagName == "StarcraftII"){
-            File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");
+            File file = getBaseContext().getFileStreamPath("StarCraftUser.txt");  //same with StarCraft
             if(file.exists()){
                 try{
                     String data = new Scanner(file).next();
@@ -118,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         if(TagName == "DiabloIII"){
-            File file = getBaseContext().getFileStreamPath("DiabloUser.txt");
+            File file = getBaseContext().getFileStreamPath("DiabloUser.txt");   //and Diablo
             if(file.exists()){
                 try{
                     String data = new Scanner(file).next();
@@ -137,33 +122,11 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         else if(TagName == "Custom"){
-            Intent intent = new Intent(this, GSCustom.class);
+            Intent intent = new Intent(this, GSCustom.class);  //For Custom Templates, just go to the Custom Menu
             startActivity(intent);
         }
         return true;
     }
 
-    public void writeToFile(String FileName, String Data){
-        FileOutputStream Writer;
-
-        try
-        {
-            //File root = Environment.getExternalStorageDirectory();
-            //File file = new File(root, "WoWUser");
-            //Writer = new FileOutputStream(FileName);
-            if(new File(FileName).exists()){
-                System.out.println("HI");
-            }
-            Writer = openFileOutput(FileName, Context.MODE_PRIVATE);
-            //Writer = context.openFileOutput("WoWUser", Context.MODE_PRIVATE);
-            Writer.write(Data.getBytes());
-            Writer.close();
-
-        }
-        catch(Exception E)
-        {
-            E.printStackTrace();
-        }
-    }
 }
 

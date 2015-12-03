@@ -12,7 +12,7 @@ public class Initializer {
 
 
     public static Parent initialize_Blizz(){
-        ArrayList<Child> Games = new ArrayList<Child>();
+        ArrayList<Child> Games = new ArrayList<Child>();  //initiates the Blizzard Games Menus
 
         Parent BlizzardGames = new Parent();
         BlizzardGames.setTitle("Blizzard Games");
